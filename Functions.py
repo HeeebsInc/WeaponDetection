@@ -1,7 +1,55 @@
-# import the necessary packages
 import numpy as np
+from keras.preprocessing import image 
+import cv2
 
-def non_max_suppression(boxes, probs=None, overlapThresh=0.3):
+
+def get_image_value(path, dim, img_type = 'normal'): 
+    img = image.load_img(path, target_size =dim)
+    img = image.img_to_array(img)
+    if img_type =='grey':
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = img.reshape(img.shape[0], img.shape[1], 1)
+    
+    return img/255
+
+# def get_image_value(path, dim, img_type = 'normal'): 
+#     if img_type =='grey':
+#         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE) 
+#     else: 
+#         img = cv2.imread(path)
+#     return img/255
+
+# def get_image_value(path, dim, img_type):
+#     img = cv2.imread(path, cv2.COLOR_BGR2GRAY)
+
+#     # convert to 3 equal channels
+# #     img = cv2.merge((img, img, img))
+
+# #     # create 1 pixel red image
+# #     red = np.zeros((1, 1, 3), np.uint8)
+# #     red[:] = (0,0,255)
+
+# #     # create 1 pixel blue image
+# #     blue = np.zeros((1, 1, 3), np.uint8)
+# #     blue[:] = (255,0,0)
+
+# #     # append the two images
+# #     lut = np.concatenate((red, blue), axis=0)
+
+# #     # resize lut to 256 values
+# #     lut = cv2.resize(lut, (1,256), interpolation=cv2.INTER_CUBIC)
+
+# #     # apply lut
+# #     result = cv2.LUT(img, lut)
+    
+    
+#     return img
+
+
+
+
+
+def non_max_suppression(boxes, probs, overlapThresh=0.3):
     # if there are no boxes, return an empty list
     if len(boxes) == 0:
         return []
@@ -32,7 +80,6 @@ def non_max_suppression(boxes, probs=None, overlapThresh=0.3):
 
     # sort the indexes
     idxs = np.argsort(idxs)
-
     # keep looping while some indexes still remain in the indexes list
     while len(idxs) > 0:
         # grab the last index in the indexes list and add the index value
