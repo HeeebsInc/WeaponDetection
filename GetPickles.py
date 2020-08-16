@@ -12,6 +12,7 @@ import var
 
 
 def get_img_array(img_paths, dim, img_type): 
+    from tqdm import tqdm
     final_array = []
     for path in tqdm(img_paths): 
         img = func.get_image_value(path, dim, img_type)
@@ -51,6 +52,9 @@ def get_pickles(nn_type):
     
     elif nn_type == 'inceptionnet': 
         DIM = var.inception_dimension
+        
+    elif nn_type == 'vgg16': 
+        DIM = var.vgg_dimension
         
     new_x_train = get_img_array(x_train.path.values, DIM, img_type = var.img_type)
     new_x_test = get_img_array(x_test.path.values, DIM, img_type = var.img_type)
