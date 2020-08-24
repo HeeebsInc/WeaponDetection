@@ -12,41 +12,6 @@ def get_image_value(path, dim, img_type = 'normal'):
     
     return img/255
 
-# def get_image_value(path, dim, img_type = 'normal'): 
-#     if img_type =='grey':
-#         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE) 
-#     else: 
-#         img = cv2.imread(path)
-#     return img/255
-
-# def get_image_value(path, dim, img_type):
-#     img = cv2.imread(path, cv2.COLOR_BGR2GRAY)
-
-#     # convert to 3 equal channels
-# #     img = cv2.merge((img, img, img))
-
-# #     # create 1 pixel red image
-# #     red = np.zeros((1, 1, 3), np.uint8)
-# #     red[:] = (0,0,255)
-
-# #     # create 1 pixel blue image
-# #     blue = np.zeros((1, 1, 3), np.uint8)
-# #     blue[:] = (255,0,0)
-
-# #     # append the two images
-# #     lut = np.concatenate((red, blue), axis=0)
-
-# #     # resize lut to 256 values
-# #     lut = cv2.resize(lut, (1,256), interpolation=cv2.INTER_CUBIC)
-
-# #     # apply lut
-# #     result = cv2.LUT(img, lut)
-    
-    
-#     return img
-
-
-
 
 
 def non_max_suppression(boxes, probs, overlapThresh=0.3):

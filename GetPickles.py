@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import Functions as func
 import var
+from keras.utils import to_categorical
 
 
 
@@ -24,29 +25,27 @@ def get_img_array(img_paths, dim, img_type):
         return np.array(final_array)
 
 def get_pickles(nn_type):
-    from tqdm import tqdm
-    df = pd.DataFrame(columns = ['path', 'label'])
-    negative = [f'../FinalImages/Negative/{i}' for i in os.listdir('../FinalImages/Negative')]
+    pistol_paths = [f'../Separated/Pistol/{i}' for i in os.listdir('../Separated/Pistol')] + \
+    [f'../Separated/Stock_Pistol/{i}' for i in os.listdir('../Separated/Stock_Pistol')]
+    
+    pistol_labels = [1 for i in range(len(pistol_paths))]
+    
+    rifle_paths = [f'../Separated/AR/{i}' for i in os.listdir('../Separated/AR')] + \
+    [f'../Separated/Stock_AR/{i}' for i in os.listdir('../Separated/Stock_AR')]
+    rifle_labels = [2 for i in range(len(rifle_paths))]
+    
+
+    negative = [f'../hand_dataset/Combined/{i}' for i in os.listdir('../hand_dataset/Combined')][:len(pistol_paths)]
     neg_labels = [0 for i in range(len(negative))]
-    positive = [f'../FinalImages/Positive/{i}' for i in os.listdir('../FinalImages/Positive')]
-    pos_labels = [1 for i in range(len(positive))]
-    concat_path = negative[:len(positive)+ len(positive)] + positive
-    concat_labels = neg_labels[:len(positive)+ len(positive)] + pos_labels
+
+    paths = pistol_paths + rifle_paths + negative
+    labels = pistol_labels + rifle_labels + neg_labels
 
 
-    df.path = concat_path 
-    df.label = concat_labels 
+    x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90)
 
-    X = df
-    y = df[['label']]
-    
-    x_train, x_test, y_train, y_test = train_test_split(X, y, stratify = X.label, train_size = .95, random_state = 10)
-
-    x_train.drop('label', axis = 1, inplace = True)
-    x_test.drop('label', axis = 1, inplace = True)
-    
     if nn_type == 'normal': 
-        DIM =  var.normal_dimension 
+        DIM =  var.norm_dimension 
     elif nn_type == 'mobilenet': 
         DIM = var.mobilenet_dimension
     
@@ -56,8 +55,14 @@ def get_pickles(nn_type):
     elif nn_type == 'vgg16': 
         DIM = var.vgg_dimension
         
-    new_x_train = get_img_array(x_train.path.values, DIM, img_type = var.img_type)
-    new_x_test = get_img_array(x_test.path.values, DIM, img_type = var.img_type)
+    new_x_train = get_img_array(x_train, DIM, img_type = var.img_type)
+    new_x_test = get_img_array(x_test, DIM, img_type = var.img_type)
+    
+    print(pd.Series(y_train + y_test).value_counts())
+    y_train = np.array(y_train)
+    y_test = np.array(y_test)
+    
+    
     
     pickle.dump(new_x_train, open(f'../Pickles/{nn_type}_x_train.p', 'wb'), protocol=4)
     pickle.dump(y_train, open(f'../Pickles/{nn_type}_y_train.p', 'wb'), protocol=4)
@@ -71,4 +76,8 @@ def get_samples(nn_type):
     x_test = pickle.load(open(f'../Pickles/{nn_type}_x_test.p', 'rb'))
     y_train = pickle.load(open(f'../Pickles/{nn_type}_y_train.p', 'rb'))
     y_test = pickle.load(open(f'../Pickles/{nn_type}_y_test.p', 'rb'))
+    
+    y_test = to_categorical(y_test)
+    y_train = to_categorical(y_train)
+
     return x_train, x_test, y_train, y_test
