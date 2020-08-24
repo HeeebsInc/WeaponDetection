@@ -25,26 +25,8 @@ def get_img_array(img_paths, dim, img_type):
         return np.array(final_array)
 
 def get_pickles(nn_type):
-    pistol_paths = [f'../Separated/Pistol/{i}' for i in os.listdir('../Separated/Pistol')] + \
-    [f'../Separated/Stock_Pistol/{i}' for i in os.listdir('../Separated/Stock_Pistol')]
     
-    pistol_labels = [1 for i in range(len(pistol_paths))]
-    
-    rifle_paths = [f'../Separated/AR/{i}' for i in os.listdir('../Separated/AR')] + \
-    [f'../Separated/Stock_AR/{i}' for i in os.listdir('../Separated/Stock_AR')]
-    rifle_labels = [2 for i in range(len(rifle_paths))]
-    
-
-    negative = [f'../hand_dataset/Combined/{i}' for i in os.listdir('../hand_dataset/Combined')][:len(pistol_paths)]
-    neg_labels = [0 for i in range(len(negative))]
-
-    paths = pistol_paths + rifle_paths + negative
-    labels = pistol_labels + rifle_labels + neg_labels
-
-
-    x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90)
-
-    if nn_type == 'normal': 
+    if nn_type == 'normal' or nn_type == 'normal2': 
         DIM =  var.norm_dimension 
     elif nn_type == 'mobilenet': 
         DIM = var.mobilenet_dimension
@@ -54,6 +36,40 @@ def get_pickles(nn_type):
         
     elif nn_type == 'vgg16': 
         DIM = var.vgg_dimension
+        
+    if nn_type == 'normal2':
+        pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
+
+
+        pistol_labels = [1 for i in range(len(pistol_paths))]
+
+        rifle_paths = [f'../Separated/FinalImages/Rifle/{i}' for i in os.listdir('../Separated/FinalImages/Rifle')] 
+        rifle_labels = [2 for i in range(len(rifle_paths))]
+
+        negative = [f'../hand_dataset/Combined/{i}' for i in os.listdir('../hand_dataset/Combined')][:len(pistol_paths)]
+        neg_labels = [0 for i in range(len(negative))]
+
+    else: 
+        pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
+
+
+        pistol_labels = [1 for i in range(len(pistol_paths))]
+
+        rifle_paths = [f'../Separated/FinalImages/Rifle/{i}' for i in os.listdir('../Separated/FinalImages/Rifle')] 
+        rifle_labels = [2 for i in range(len(rifle_paths))]
+
+        negative = [f'../Separated/FinalImages/NoWeapon/{i}' for i in os.listdir('../Separated/FinalImages/NoWeapon')][:len(pistol_paths)]
+        neg_labels = [0 for i in range(len(negative))]
+
+    #     negative = [f'../hand_dataset/Combined/{i}' for i in os.listdir('../hand_dataset/Combined')][:len(pistol_paths)]
+    #     neg_labels = [0 for i in range(len(negative))]
+
+    paths = pistol_paths + rifle_paths + negative
+    labels = pistol_labels + rifle_labels + neg_labels
+
+
+    x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90)
+
         
     new_x_train = get_img_array(x_train, DIM, img_type = var.img_type)
     new_x_test = get_img_array(x_test, DIM, img_type = var.img_type)
