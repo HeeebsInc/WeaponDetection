@@ -161,7 +161,7 @@ def get_img_prediction_bounding_box(path, model, dim):
         endx = x+w 
         endy = y+h 
         roi = img[starty:endy, startx:endx]
-        roi = cv2.resize(roi, dsize =var.mobilenet_dimension, interpolation = cv2.INTER_CUBIC)
+        roi = cv2.resize(roi, dsize =dim, interpolation = cv2.INTER_CUBIC)
         windows.append(roi)
         locations.append((startx, starty, endx, endy))
 
@@ -170,19 +170,20 @@ def get_img_prediction_bounding_box(path, model, dim):
     predictions = model.predict(windows)
 
     clone = img.copy()
+    clone2 = img.copy()
     cat_predictions = predictions[:,cat_index]
     pred_max_idx = np.argmax(cat_predictions)
     pred_max = cat_predictions[pred_max_idx]
     
     pred_max_window = locations[pred_max_idx]
     startx, starty, endx, endy = pred_max_window
-    cv2.rectangle(clone, (startx, starty), (endx, endy),  (0,255,0),2)
+    cv2.rectangle(clone, (startx, starty), (endx, endy),  (0,0,255),2)
 
     text = f'{cat}'
-    cv2.putText(clone, text, (startx, starty), cv2.FONT_HERSHEY_SIMPLEX, .45, (0,255,0),2)
+    cv2.putText(clone, text, (startx, starty), cv2.FONT_HERSHEY_SIMPLEX, .45, (0,0,255),2)
    
     
-    cv2.imshow(f'{cat}', clone)
+    cv2.imshow(f'{cat}', np.hstack([clone, clone2]))
     cv2.waitKey(0)
 
 
