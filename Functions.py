@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import var
 from keras.utils import to_categorical
+from lime import lime_image
+from skimage.segmentation import mark_boundaries
 
 
 
@@ -70,6 +72,8 @@ def get_pickles(nn_type, edge = False):
         
     elif nn_type == 'vgg16': 
         DIM = var.vgg_dimension
+    elif nn_type == 'alexnet': 
+        DIM = var.alex_dimension
         
     
     pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
@@ -130,6 +134,57 @@ def get_samples(nn_type, edge = False):
     y_train = to_categorical(y_train)
 
     return x_train, x_test, y_train, y_test
+
+def get_img_prediction_bounding_box(path, model, dim): 
+    img = get_image_value(path, dim, var.img_type)
+    img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
+    pred = model.predict(img)[0]
+    
+    category_dict = {0: 'No Weapon', 1: 'Handgun', 2: 'Rifle'}
+    cat_index = np.argmax(pred)
+    cat = category_dict[cat_index]
+    
+    print(f'{path}\t\t{cat_index}||{cat}\t\t{pred.max()}\t\t{pred}')
+    
+    
+    img = cv2.imread(path)
+    ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
+    ss.setBaseImage(img)
+    ss.switchToSelectiveSearchFast()
+    rects = ss.process() 
+
+    windows = []
+    locations = []
+    for x, y, w,h in rects: 
+        startx = x 
+        starty = y 
+        endx = x+w 
+        endy = y+h 
+        roi = img[starty:endy, startx:endx]
+        roi = cv2.resize(roi, dsize =var.mobilenet_dimension, interpolation = cv2.INTER_CUBIC)
+        windows.append(roi)
+        locations.append((startx, starty, endx, endy))
+
+    windows = np.array(windows)
+
+    predictions = model.predict(windows)
+
+    clone = img.copy()
+    cat_predictions = predictions[:,cat_index]
+    pred_max_idx = np.argmax(cat_predictions)
+    pred_max = cat_predictions[pred_max_idx]
+    
+    pred_max_window = locations[pred_max_idx]
+    startx, starty, endx, endy = pred_max_window
+    cv2.rectangle(clone, (startx, starty), (endx, endy),  (0,255,0),2)
+
+    text = f'{cat}'
+    cv2.putText(clone, text, (startx, starty), cv2.FONT_HERSHEY_SIMPLEX, .45, (0,255,0),2)
+   
+    
+    cv2.imshow(f'{cat}', clone)
+    cv2.waitKey(0)
+
 
 
 
