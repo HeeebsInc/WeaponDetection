@@ -7,9 +7,9 @@ import cv2
 from keras.preprocessing import image 
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-import var
 from keras.utils import to_categorical
-from skimage.segmentation import mark_boundaries
+import var
+
 
 
 
@@ -26,8 +26,8 @@ def auto_canny(image, sigma=0.33):
 
 
 def get_image_value(path, dim, edge = False, img_type = 'normal'): 
-    if edge == False: 
-        img = cv2.imread('../TestImages/AR.jpg')
+    if edge == True: 
+        img = cv2.imread(path)
         blurred = cv2.GaussianBlur(img, (3,3), 0)
         wide = cv2.Canny(blurred, 10,200)
         tight = cv2.Canny(blurred, 225, 250)
@@ -133,7 +133,7 @@ def get_samples(nn_type, edge = False):
 
     return x_train, x_test, y_train, y_test
 
-def get_img_prediction_bounding_box(path, model, dim): 
+def get_img_prediction_bounding_box(path, model, dim):
     img = get_image_value(path, dim, var.img_type)
     img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
     pred = model.predict(img)[0]
@@ -180,14 +180,52 @@ def get_img_prediction_bounding_box(path, model, dim):
     text = f'{cat}'
     cv2.putText(clone, text, (startx, starty), cv2.FONT_HERSHEY_SIMPLEX, .45, (0,0,255),2)
    
-    
+
     cv2.imshow(f'{cat}', np.hstack([clone, clone2]))
     cv2.waitKey(0)
 
+    return clone
 
 
+def get_conv_model_normal(dim):
+    inp_shape = dim
+    act = 'relu'
+    drop = .25
+    kernal_reg = regularizers.l1(.001)
+    dil_rate = 2
+    optimizer = Adam(lr=.001)
 
+    model = Sequential()
 
+    model.add(Conv2D(64, kernel_size=(3, 3), activation=act, input_shape=inp_shape,
+                     kernel_regularizer=kernal_reg,
+                     kernel_initializer='he_uniform', padding='same', name='Input_Layer'))
+    #     model.add(Dense(64, activation = 'relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(3, 3)))
+
+    model.add(Conv2D(64, (3, 3), activation=act, kernel_regularizer=kernal_reg,
+                     kernel_initializer='he_uniform', padding='same'))
+    #     model.add(Dense(64, activation = 'relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(3, 3)))
+
+    model.add(Conv2D(128, (3, 3), activation=act, kernel_regularizer=kernal_reg,
+                     kernel_initializer='he_uniform', padding='same'))
+    model.add(Conv2D(128, (3, 3), activation=act, kernel_regularizer=kernal_reg,
+                     kernel_initializer='he_uniform', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(3, 3)))
+
+    model.add(Flatten())
+
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dense(32, activation='relu'))
+
+    model.add(Dropout(drop))
+
+    model.add(Dense(3, activation='softmax', name='Output_Layer'))
+
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+    return model
 
 # def non_max_suppression(boxes, probs, overlapThresh=0.3):
 #     # if there are no boxes, return an empty list

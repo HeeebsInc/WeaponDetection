@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Prediction Results for Uploaded Image</title>
+<h2 style = "text-align:center;">Prediction: {{cat}}</h2>
+<h2 style = "text-align:center;">Confidence: {{prob}}</h2>
+
+<img src="{{ url_for('static', filename = bounding_image) }}" alt = 'bounding box' width="500" height="500">
+<img src="{{ url_for('static', filename = lime_image) }}" alt = 'feature importance' width="500" height="500">
+
+
+
