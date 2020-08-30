@@ -10,6 +10,7 @@ app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg',}
 UPLOAD_FOLDER = 'templates/upload_folder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 @app.route('/')
 def index():
     return render_template('homepage.html')
@@ -59,20 +60,14 @@ def upload_picture():
     return '''
     <!doctype html>
     <title>Upload Any Image</title>
-    <h1>Upload new File</h1>
-    <p>This may take a few minutes...</p>
+    <h1>Upload Any Image</h1>
+    <p>This may take a few minutes to load...</p>
+    <p>Images will be displayed in lower resolution due to resizing</p>
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
-      <input type=submit value=Upload>
+      <input type=submit value=Predict>
     </form>
+    <p><a href = '/'>Homepage</a>
     '''
-@app.route('/display/<filename>')
-def display_image(filename):
-	#print('display_image filename: ' + filename)
-	return redirect(url_for('static', filename='uploads/' + filename), code=301)
-
-# @app.route('/upload_picture')
-# def upload_picture():
-#     return render_
 if __name__ == '__main__':
     app.run(threaded = True, port = 5000)

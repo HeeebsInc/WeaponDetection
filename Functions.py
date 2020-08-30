@@ -35,7 +35,7 @@ def get_image_value(path, dim, edge = False, img_type = 'normal'):
         wide = cv2.resize(wide, dim, interpolation = cv2.INTER_CUBIC)
         tight = cv2.resize(tight, dim, interpolation = cv2.INTER_CUBIC)
         auto = cv2.resize(auto, dim, interpolation = cv2.INTER_CUBIC)
-        return tight
+        return wide
     else: 
         img = image.load_img(path, target_size = dim)
         img = image.img_to_array(img)
@@ -54,7 +54,8 @@ def get_img_array(img_paths, dim, img_type, edge):
         final_array.append(img)
     final_array = np.array(final_array)
     if edge:
-        return final_array.reshape(final_array.shape[0], dim[0], dim[1], 1)
+        return final_array
+#         return final_array.reshape(final_array.shape[0], dim[0], dim[1], 1)
     else: 
         return final_array
         
@@ -90,43 +91,43 @@ def get_pickles(nn_type, edge = False):
     labels = pistol_labels + rifle_labels + neg_labels
 
 
-    x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90)
+    x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90, random_state = 10)
 
         
     new_x_train = get_img_array(x_train, DIM, img_type = var.img_type, edge = edge)
     new_x_test = get_img_array(x_test, DIM, img_type = var.img_type, edge = edge)
     
-    print(pd.Series(y_train + y_test).value_counts())
+    print('Train Value Counts')
+    print(pd.Series(y_train).value_counts())
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('Test Value Counts')
+    print(pd.Series(y_test).value_counts())
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~') 
+    print('X Train Shape')
+    print(new_x_train.shape)
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print('X Test Shape')
+    print(new_x_test.shape)
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    
     y_train = np.array(y_train)
     y_test = np.array(y_test)
     
-    
-    if edge:
-        pickle.dump(new_x_train, open(f'../Pickles/edge_{nn_type}_x_train.p', 'wb'), protocol=4)
-        pickle.dump(y_train, open(f'../Pickles/edge_{nn_type}_y_train.p', 'wb'), protocol=4)
-        pickle.dump(new_x_test, open(f'../Pickles/edge_{nn_type}_x_test.p', 'wb'), protocol=4)
-        pickle.dump(y_test, open(f'../Pickles/edge_{nn_type}_y_test.p', 'wb'), protocol=4)
+    tts = (new_x_train, new_x_test, y_train, y_test)
+    if edge == True:
+        pickle.dump(tts, open(f'../Pickles/edge_{nn_type}_tts.p', 'wb'), protocol=4)
     else:
-        pickle.dump(new_x_train, open(f'../Pickles/{nn_type}_x_train.p', 'wb'), protocol=4)
-        pickle.dump(y_train, open(f'../Pickles/{nn_type}_y_train.p', 'wb'), protocol=4)
-        pickle.dump(new_x_test, open(f'../Pickles/{nn_type}_x_test.p', 'wb'), protocol=4)
-        pickle.dump(y_test, open(f'../Pickles/{nn_type}_y_test.p', 'wb'), protocol=4)
+        pickle.dump(tts, open(f'../Pickles/{nn_type}_tts.p', 'wb'), protocol=4)
         
-    
-    
-    
+    return tts
+        
+        
 def get_samples(nn_type, edge = False): 
-    if edge: 
-        
-        x_train = pickle.load(open(f'../Pickles/edge_{nn_type}_x_train.p', 'rb'))
-        x_test = pickle.load(open(f'../Pickles/edge_{nn_type}_x_test.p', 'rb'))
-        y_train = pickle.load(open(f'../Pickles/edge_{nn_type}_y_train.p', 'rb'))
-        y_test = pickle.load(open(f'../Pickles/edge_{nn_type}_y_test.p', 'rb'))
+    if edge == True: 
+        x_train, x_test, y_train, y_test = pickle.load(open(f'../Pickles/edge_{nn_type}_tts.p', 'rb'))
+    
     else: 
-        x_train = pickle.load(open(f'../Pickles/{nn_type}_x_train.p', 'rb'))
-        x_test = pickle.load(open(f'../Pickles/{nn_type}_x_test.p', 'rb'))
-        y_train = pickle.load(open(f'../Pickles/{nn_type}_y_train.p', 'rb'))
-        y_test = pickle.load(open(f'../Pickles/{nn_type}_y_test.p', 'rb'))
+        x_train, x_test, y_train, y_test = pickle.load(open(f'../Pickles/{nn_type}_tts.p', 'rb'))
     
     y_test = to_categorical(y_test)
     y_train = to_categorical(y_train)
@@ -183,7 +184,7 @@ def get_img_prediction_bounding_box(path, model, dim):
 
     cv2.imshow(f'{cat}', np.hstack([clone, clone2]))
     cv2.waitKey(0)
-
+    ss.clear()
     return clone
 
 
