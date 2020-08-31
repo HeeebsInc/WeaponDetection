@@ -10,7 +10,8 @@ from itertools import cycle
 
 
 
-def plot_loss_accuracy(model_history): 
+def plot_loss_accuracy(model_history, theme, path = None): 
+    plt.style.use(theme)
     train_loss = model_history.history['loss']
     train_acc = model_history.history['acc']
     test_loss = model_history.history['val_loss']
@@ -22,23 +23,28 @@ def plot_loss_accuracy(model_history):
     ax[0].plot(epochs, test_loss, label = 'Test Loss')
     ax[0].set_title('Train/Test Loss')
     ax[0].set_xlabel('Epochs')
-    ax[0].set_ylabel('Loss')
+    ax[0].set_ylabel('Loss (cateogircal_crossentropy)')
     ax[0].legend()
 
     ax[1].plot(epochs, train_acc, label = 'Train Accuracy')
     ax[1].plot(epochs, test_acc, label = 'Test Accuracy')
     ax[1].set_title('Train/Test Accuracy')
     ax[1].set_xlabel('Epochs')
-    ax[1].set_ylabel('Loss')
+    ax[1].set_ylabel('Accuracy')
     ax[1].legend()
+    
+    
+    if path: 
+        plt.savefig(path)
     
 
     
-def plot_roc_auc(model, x_test, y_test): 
+def plot_roc_auc(model, x_test, y_test, theme, path = None):
+    plt.style.use(theme)
+    plt.figure(figsize = (13,8))
     y_test = label_binarize(y_test, classes = [0,1,2])
     n_classes = y_test.shape[1]
     
-    fig, ax = plt.subplots(1, figsize = (13,8))
     #AUC CURVE
     
     y_test_prob = model.predict(x_test)
@@ -75,29 +81,33 @@ def plot_roc_auc(model, x_test, y_test):
     lw = 2
     # Plot all ROC curves
 
-    ax.plot(fpr["macro"], tpr["macro"],
+    plt.plot(fpr["macro"], tpr["macro"],
              label='macro-average ROC curve (area = {0:0.2f})'
                    ''.format(roc_auc["macro"]),
              color='navy', linestyle=':', linewidth=4)
 
     colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
     for i, color in zip(range(n_classes), colors):
-        ax.plot(fpr[i], tpr[i], color=color, lw=lw,
+        plt.plot(fpr[i], tpr[i], color=color, lw=lw,
                  label='ROC curve of class {0} (area = {1:0.2f})'
                  ''.format(i, roc_auc[i]))
 
-    ax.plot([0, 1], [0, 1], 'k--', lw=lw)
-    ax.set_xlim([0.0, 1.0])
-    ax.set_ylim([0.0, 1.05])
-    ax.set_xlabel('False Positive Rate')
-    ax.set_ylabel('True Positive Rate')
-    ax.set_title('ROC/AUC for Each Class (Test)')
-    ax.legend(loc="lower right")
-    plt.show()
+    plt.plot([0, 1], [0, 1], 'k--', lw=lw)
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('ROC/AUC for Each Class (Test)')
+    plt.legend(loc="lower right")
+    plt.tight_layout()
     
     f1 = f1_score(y_test_actual, y_test_pred, average = None)
     statement = f'F1 Scores Test\n~~~~~~~~~~~~~~~~~~~~~~\nNo Weapon: {f1[0]}\nHandGun: {f1[1]}\nRifle: {f1[2]}'
     print(statement)
+    
+    if path: 
+        plt.savefig(path)
+    plt.show()
     
     
     
