@@ -20,6 +20,13 @@
 - Create a neural network that can be integrated into traditional surveillance systems 
 - This neural network will be able to detect whether a firearm is present in a frame, and if so, it will notify authorities/managers of its detection
 
+### Requirements
+- `keras` (I used PlaidML backend)
+- `numpy` 
+- `opencv` (opencv-contrib-python)
+- `matplotlib`
+- `beautifulsoup`
+
 ### Data 
 - Data used in this project can be found on my Google Drive 
     - [Weapons](https://drive.google.com/file/d/1EZZKhCk0DK3S9zB53o3nWhKrZUbmN2Up/view?usp=sharing)
