@@ -23,6 +23,7 @@
 ## Requirements
 - `keras` (PlaidML backend --> GPU: RX 580 8GB)
 - `numpy` 
+- `pandas`
 - `opencv` (opencv-contrib-python)
 - `matplotlib`
 - `beautifulsoup`
