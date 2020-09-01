@@ -1,7 +1,7 @@
 # Weapon Detection System
 
 ## Contributers
-- Samuel Mohebban
+- Samuel Mohebban (B.A. Psychology- George Washington University) 
     - Samuel.Mohebbanjob@gmail.com
     - [LinkedIn](https://www.linkedin.com/in/samuel-mohebban-b50732139/)
     - [Medium](https://medium.com/@HeeebsInc)
