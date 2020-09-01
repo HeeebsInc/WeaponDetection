@@ -31,6 +31,7 @@
     - By doing this, the problem became a ternary rather than a binary classification 
 - For each image, a bounding box was drawn to find the coordinates of gun within the image.  This process was outsourced to ScaleOps.AI - a company that specializes in data labeling for machine learning 
 - For the negative group (no gun), 2433 images that feature a person holding no gun
+
 ![ClassFreq](Figures/ClassFreq.png)
 
 ### Data Processing 
@@ -41,6 +42,7 @@
     - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  In this case, for every original photo, two corresponding images were used for training 
 
 ![ROIExample](figures/ROIExample.png)
+
 - After resizing, edge detection was applied in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a (150,150) shape, which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
 ![EdgeDetection](figures/EdgeDetection.png)
@@ -54,10 +56,12 @@
     - 2 = Rifle
 #### 1) Augmentation
 ![LossAccAugment](figures/CNNModelAugment.png)
+
 ![CMAugment](figures/CMAugment.png)
 
 #### 2) No Augmentation 
 ![LossAccAugment](figures/CNNModelNoAugment.png)
+
 ![CMAugment](figures/CMNoAugment.png)
 
 - Considering the results showsn above, the loss and accuracy were more steady with augmentation
@@ -69,7 +73,9 @@
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video 
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
+
 ![SlidingWindow](figures/SlidingWindow.gif)
+
     3) Run each bounding box through the trained algorithm and retrieve the corresponding predictions 
     4) If a gun is predicted, mark the bounding box onto the original image 
     5) if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)
@@ -77,6 +83,7 @@
 ![NMS](figures/NMS.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
+
 ![VideoDemo](figures/Demo.gif)
 
 
