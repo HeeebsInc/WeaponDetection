@@ -21,7 +21,7 @@
 - This neural network will be able to detect whether a firearm is present in a frame, and if so, it will notify authorities/managers of its detection
 
 ## Requirements
-- `keras` (I used PlaidML backend)
+- `keras` (PlaidML backend --> GPU: RX 580 8GB)
 - `numpy` 
 - `opencv` (opencv-contrib-python)
 - `matplotlib`
