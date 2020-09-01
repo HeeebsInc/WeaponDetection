@@ -83,7 +83,7 @@
 
 
 ### Deployment 
-- [Flask Code](FlaskApp)
+- [Flask Code](FlaskApp) (COMING SOON)
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video 
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
