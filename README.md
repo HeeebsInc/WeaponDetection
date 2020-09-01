@@ -7,7 +7,7 @@
     - [Medium](https://medium.com/@HeeebsInc)
 
 ### Business Probelm
-- Mass shoorting have become increasingly prevalent at public gatherings 
+- Mass shootings have become increasingly prevalent at public gatherings 
 - Creating an algorithm that that be integrated into traditional surveillance systems can be used to detect threats faster and more efficiently than those monitored by people 
 - In modern surveillance systems, there is a person or group of people, in charge of watching monitors which can span across multiple floors of a given area
 - Considering the graphs below, the United States ranks among the top 5 countries in terms of firearm deaths 
