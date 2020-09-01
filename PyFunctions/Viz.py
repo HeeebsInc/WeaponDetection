@@ -19,7 +19,7 @@ def plot_loss_accuracy(model_history, theme, path = None):
     test_acc = model_history.history['val_acc']
     epochs = [i for i in range(1, len(test_acc)+1)]
 
-    fig, ax = plt.subplots(1,2, figsize = (15,5))
+    fig, ax = plt.subplots(1,2, figsize = (10,5))
     ax[0].plot(epochs, train_loss, label = 'Train Loss')
     ax[0].plot(epochs, test_loss, label = 'Test Loss')
     ax[0].set_title('Train/Test Loss')
@@ -43,7 +43,7 @@ def plot_loss_accuracy(model_history, theme, path = None):
 def plot_roc_auc(model, x_test, y_test, theme, path = None):
     '''This function will create ROC curve given the model, x_test, y_test, and theme for the plot. '''
     plt.style.use(theme)
-    plt.figure(figsize = (13,8))
+    plt.figure(figsize = (8,5))
     y_test = label_binarize(y_test, classes = [0,1,2])
     n_classes = y_test.shape[1]
     
@@ -131,7 +131,7 @@ def plot_model_cm(test_cm, train_cm, classes,
         train_cm = train_cm.astype('float') / train_cm.sum(axis=1)[:, np.newaxis]
 
 
-    fig, ax = plt.subplots(1,2, figsize = (10,8))
+    fig, ax = plt.subplots(1,2, figsize = (8,8))
     
     #Test Set
     ax[0].imshow(test_cm, interpolation='nearest', cmap=cmap)

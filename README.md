@@ -59,10 +59,17 @@
 
 ![CMAugment](Figures/CMAugment.png)
 
+![ROCAugment](Figures/ROCAUCAugment.png)
+
 #### 2) No Augmentation 
 ![LossAccAugment](Figures/CNNModelNoAugment.png)
 
 ![CMAugment](Figures/CMNoAugment.png)
+
+![ROCAugment](Figures/ROCAUCNoAugment.png)
+
+
+
 
 - Considering the results showsn above, the loss and accuracy were more steady with augmentation
 - However, comparing the confusion matrixes in both, the augmentation model was unable to distinguish weapons from non weapons in the test set
