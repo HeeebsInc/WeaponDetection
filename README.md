@@ -14,7 +14,7 @@
     - **Total Deaths** [Data](https://worldpopulationreview.com/country-rankings/gun-deaths-by-country)
     - **Mass Shootings** [Data](https://worldpopulationreview.com/country-rankings/mass-shootings-by-country)
     
-![firearm deaths](figures/FirearmDeaths.png)
+![firearm deaths](Figures/FirearmDeaths.png)
 
 ### Solution 
 - Create a neural network that can be integrated into traditional surveillance systems 
@@ -41,11 +41,11 @@
     - In the figure below, the image on the right was the original photo. Using that photo and the bounding box coordinates, a new photo was created that focuses on the gun only
     - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  In this case, for every original photo, two corresponding images were used for training 
 
-![ROIExample](figures/ROIExample.png)
+![ROIExample](Figures/ROIExample.png)
 
 - After resizing, edge detection was applied in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a (150,150) shape, which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
-![EdgeDetection](figures/EdgeDetection.png)
+![EdgeDetection](Figures/EdgeDetection.png)
 
 ### Modeling 
 - [Modeling Notebook](ModelingNotebook.ipynb)
@@ -55,14 +55,14 @@
     - 1 = Handgun
     - 2 = Rifle
 #### 1) Augmentation
-![LossAccAugment](figures/CNNModelAugment.png)
+![LossAccAugment](Figures/CNNModelAugment.png)
 
-![CMAugment](figures/CMAugment.png)
+![CMAugment](Figures/CMAugment.png)
 
 #### 2) No Augmentation 
-![LossAccAugment](figures/CNNModelNoAugment.png)
+![LossAccAugment](Figures/CNNModelNoAugment.png)
 
-![CMAugment](figures/CMNoAugment.png)
+![CMAugment](Figures/CMNoAugment.png)
 
 - Considering the results showsn above, the loss and accuracy were more steady with augmentation
 - However, comparing the confusion matrixes in both, the augmentation model was unable to distinguish weapons from non weapons in the test set
@@ -74,17 +74,17 @@
     1) Input an image or frame within a video 
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
 
-![SlidingWindow](figures/SlidingWindow.gif)
+![SlidingWindow](Figures/SlidingWindow.gif)
 
     3) Run each bounding box through the trained algorithm and retrieve the corresponding predictions 
     4) If a gun is predicted, mark the bounding box onto the original image 
     5) if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)
     
-![NMS](figures/NMS.png)
+![NMS](Figures/NMS.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
 
-![VideoDemo](figures/Demo.gif)
+![VideoDemo](Figures/Demo.gif)
 
 
 ### Limitations
