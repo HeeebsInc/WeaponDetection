@@ -101,7 +101,7 @@
 ### Future Directions 
 - Using Transfer Learning 
     - Using models that are already trained on objects such as people could be decrease false positive rates as it would be better at distinguishing objects that are not guns
-    - More data.  Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
+- More data.  Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
     
     
     
