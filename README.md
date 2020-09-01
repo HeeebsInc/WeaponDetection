@@ -73,13 +73,12 @@
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video 
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
-
-![SlidingWindow](Figures/SlidingWindow.gif)
-
     3) Run each bounding box through the trained algorithm and retrieve the corresponding predictions 
     4) If a gun is predicted, mark the bounding box onto the original image 
     5) if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)
     
+![SlidingWindow](Figures/SlidingWindow.gif)
+     
 ![NMS](Figures/NMS.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
