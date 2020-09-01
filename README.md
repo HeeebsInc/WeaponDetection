@@ -1,4 +1,4 @@
-# NN_Weapon_Detection
+# Weapon Detection System
 
 ### Contributers
 - Samuel Mohebban
