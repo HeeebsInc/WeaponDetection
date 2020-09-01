@@ -86,7 +86,7 @@
 
 
 ## Deployment 
-- [Flask Code](FlaskApp) (COMING SOON)
+- [Flask Code](FlaskApp) (WEBSITE COMING SOON)
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video 
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
@@ -99,6 +99,7 @@
 ![NMS](Figures/NMS.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
+- I want to note that there are some issues with NMS as these will be fixes in the next week.  
 
 ![VideoDemo](Figures/Demo.gif)
 
@@ -115,7 +116,7 @@
     
     
     
-    
+I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
 
 
 
