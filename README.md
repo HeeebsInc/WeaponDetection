@@ -81,8 +81,8 @@
 
 
 
-- Considering the results showsn above, the loss and accuracy were more steady with augmentation
-- However, comparing the confusion matrixes in both, the augmentation model was unable to distinguish weapons from non weapons in the test set
+- Considering the results shown above, the loss and accuracy were more steady with augmentation
+- However, comparing the confusion matrices in both, the augmentation model was unable to distinguish weapons from non weapons in the test set
 
 
 ## Deployment 
