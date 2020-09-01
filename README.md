@@ -38,7 +38,7 @@
     - After labeling each image with a bounding box, images were moved into two folders corresponding to their category - 1. Handgun, 2. Rifle
     - By doing this, the problem became a ternary rather than a binary classification 
 - For each image, a bounding box was drawn to find the coordinates of gun within the image.  This process was outsourced to [ScaleOps.AI](https://scaleops.ai/) - a company that specializes in data labeling for machine learning 
-- For the negative group (no gun), 2433 images were taken from [here](https://sites.google.com/view/11khands) that feature people in various positions and activities
+- For the negative group (no gun), 2433 images were taken from [11K Hands Dataset](https://sites.google.com/view/11khands) collected by Afifi Mahmoud. This dataset features people in various positions and activities.
 
 ![ClassFreq](Figures/ClassFreq.png)
 
