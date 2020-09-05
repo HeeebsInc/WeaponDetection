@@ -45,9 +45,15 @@ def get_img_array(img_paths, dim, edge):
     else: 
         return final_array
         
-def get_pickles(nn_type, edge = False):
+def get_pickles(nn_type, version = 1, edge = False, balance = False):
     '''This function will creates a pickled file given the type of neural network architecture.  
-    Using the Var.py file, the function will determine the specified dimension of the algorithm and create pickles given the NN type.  For this function to work, you must create a folder outside the repo called Pickles'''
+    Using the Var.py file, the function will determine the specified dimension of the algorithm and create pickles given the NN type.  For this function to work, you must create a folder outside the repo called Pickles
+    Version parameter corresponds to the type of train test split: 
+        version = 1 --> using ROI and positives and hand dataset as negative
+        version = 2 --> using positive and negative ROI
+          
+        edge --> corresponds to whether it should apply edge detection to the photos within the split'''
+        
     if nn_type == 'normal': 
         DIM =  var.norm_dimension 
     elif nn_type == 'mobilenet': 
@@ -62,21 +68,41 @@ def get_pickles(nn_type, edge = False):
         DIM = var.alex_dimension
 
 #Using Seperated ROI ang hand data 
-    pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
-    pistol_labels = [1 for i in range(len(pistol_paths))]
+    if version == 1:
+        pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
+        pistol_labels = [1 for i in range(len(pistol_paths))]
 
-    rifle_paths = [f'../Separated/FinalImages/Rifle/{i}' for i in os.listdir('../Separated/FinalImages/Rifle')] 
-    rifle_labels = [2 for i in range(len(rifle_paths))]    
-    
-    neg_paths = [f'../hand_dataset/Neg/{i}' for i in os.listdir('../hand_dataset/Neg')]
-    random.shuffle(neg_paths)
-    neg_paths = neg_paths[:len(pistol_paths)- 500]
-    neg_labels = [0 for i in range(len(neg_paths))]
-    print(len(pistol_paths), len(rifle_paths), len(neg_paths))
+        rifle_paths = [f'../Separated/FinalImages/Rifle/{i}' for i in os.listdir('../Separated/FinalImages/Rifle')] 
+        rifle_labels = [2 for i in range(len(rifle_paths))]    
 
+        neg_paths = [f'../hand_dataset/Neg/{i}' for i in os.listdir('../hand_dataset/Neg')]
+        random.shuffle(neg_paths)
+        neg_paths = neg_paths[:len(pistol_paths)- 500]
+        neg_labels = [0 for i in range(len(neg_paths))]
+        
+    elif version == 2: 
+        pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
+        pistol_labels = [1 for i in range(len(pistol_paths))]
+
+        rifle_paths = [f'../Separated/FinalImages/Rifle/{i}' for i in os.listdir('../Separated/FinalImages/Rifle')] 
+        rifle_labels = [2 for i in range(len(rifle_paths))]    
+
+        neg_paths = [f'../Separated/FinalImages/NoWeapon/{i}' for i in os.listdir('../Separated/FinalImages/NoWeapon')]
+        random.shuffle(neg_paths)
+        neg_paths = neg_paths[:len(pistol_paths)- 500]
+        neg_labels = [0 for i in range(len(neg_paths))]
+        
+        
+    if balance == True: 
+        random.shuffle(pistol_paths)
+        pistol_paths = pistol_paths[:len(rifle_paths)+150]
+        neg_paths = neg_paths[:len(rifle_paths)+150]
+        
+        pistol_labels = [1 for i in range(len(pistol_paths))]
+        rifle_labels = [2 for i in range(len(rifle_paths))]
+        neg_labels = [0 for i in range(len(neg_paths))]
     paths = pistol_paths + rifle_paths + neg_paths
     labels = pistol_labels + rifle_labels + neg_labels
-
     x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90, random_state = 10)
 
     if edge == True:      
@@ -101,7 +127,8 @@ def get_pickles(nn_type, edge = False):
 
     y_train = np.array(y_train)
     y_test = np.array(y_test)
-    
+    y_test = to_categorical(y_test)
+    y_train = to_categorical(y_train)
     tts = (new_x_train, new_x_test, y_train, y_test)
     if edge == True:
         pickle.dump(tts, open(f'../Pickles/edge_{nn_type}_tts.p', 'wb'), protocol=4)
@@ -109,6 +136,7 @@ def get_pickles(nn_type, edge = False):
         pickle.dump(tts, open(f'../Pickles/{nn_type}_tts.p', 'wb'), protocol=4)
     
     return tts
+
         
         
 def get_samples(nn_type, edge = False): 
@@ -118,9 +146,6 @@ def get_samples(nn_type, edge = False):
     
     else: 
         x_train, x_test, y_train, y_test = pickle.load(open(f'../Pickles/{nn_type}_tts.p', 'rb'))
-    
-    y_test = to_categorical(y_test)
-    y_train = to_categorical(y_train)
 
     return x_train, x_test, y_train, y_test
 

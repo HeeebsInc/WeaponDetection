@@ -37,10 +37,16 @@
 - The reason this website is useful for this problem is because it features pictures of people holding guns in various different angles.
     - After labeling each image with a bounding box, images were moved into two folders corresponding to their category - 1. Handgun, 2. Rifle
     - By doing this, the problem became a ternary rather than a binary classification 
+- Modeling consisted of two versions: 
+    1. Version 1 = Used both the gun images and hand dataset 
+        - 0 = 2433 images were taken from [11K Hands Dataset](https://sites.google.com/view/11khands) collected by Afifi Mahmoud. This dataset features people in various positions and activities.
+        - 1 = Positive Pistol ROI
+        - 2 = Positive Rifle ROI
+    2. Version 2 = Used only the gun dataset to create positive and negative images for each class.  For every gun image, it was segmented to create areas where no gun was present (class 0), and where the gun was present (either class 1 or class 2)
+        - 0 = Negative ROI
+        - 1 = Positive Pistol ROI 
+        - 2 = Positive Rifle ROI
 - For each image, a bounding box was drawn to find the coordinates of gun within the image.  This process was outsourced to [ScaleOps.AI](https://scaleops.ai/) - a company that specializes in data labeling for machine learning 
-- For the negative group (no gun), 2433 images were taken from [11K Hands Dataset](https://sites.google.com/view/11khands) collected by Afifi Mahmoud. This dataset features people in various positions and activities.
-
-![ClassFreq](Figures/ClassFreq.png)
 
 ## Data Processing 
 - Before being fed into the neural network for training, each image was resized to (150,150,3)
@@ -51,40 +57,33 @@
 
 ![ROIExample](Figures/ROIExample.png)
 
-- After resizing, edge detection was applied in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
+- After resizing, edge detection was tried for each version in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
 ![EdgeDetection](Figures/EdgeDetection.png)
 
 ## Modeling 
-- [Modeling Notebook](ModelingNotebook.ipynb)
-- Two modeling techniques were tried and compared.
-- The labels and their corresponding values are as follows: 
-    - 0 = No weapon 
-    - 1 = Handgun
-    - 2 = Rifle
-    
 ### Model Architecture
 ![CNNPic](Figures/model_plot.png)
-### 1) Augmentation
-![LossAccAugment](Figures/CNNModelAugment.png)
 
-![CMAugment](Figures/CMAugment.png)
-
-![ROCAugment](Figures/ROCAUCAugment.png)
-
-### 2) No Augmentation 
-![LossAccAugment](Figures/CNNModelNoAugment.png)
-
-![CMAugment](Figures/CMNoAugment.png)
-
-![ROCAugment](Figures/ROCAUCNoAugment.png)
-
-
-
-
-- Considering the results shown above, the loss and accuracy were more steady with augmentation
-- However, comparing the confusion matrices in both, the augmentation model was unable to distinguish weapons from non weapons in the test set
-
+- [Modeling Notebook](ModelingNotebook.ipynb)
+- Categorical Crossentropy was used because the model is used to predict between three classes (0 = No Weapon, 1 = Handgun, 2 = Rifle) 
+- Softmax output was used because this is a ternary classification problem 
+- To ensure that training continued for more than 20 epochs learning rate was reduced to .0001
+- All visualization functions can be found in the Viz.py file within the PyFunctions folder
+- For each iteration of the model, we will compare the results between augmentation and non-augmentation, edge and no edge,  as well as the results between using ROI negative dataset compared with the hand_dataset of people
+- For each version, there will be 4 iterations of the model, combining to a total of 8 run throughs
+    - **Version 1** (ROI and Hand Dataset)
+        - Edge and Augmentation 
+        - Edge and no Augmentation 
+        - No edge and Augmentation 
+        - No edge and No Augmentation
+    - **Version 2** (ROI only)
+        - Edge and Augmentation 
+        - Edge and no Augmentation 
+        - No edge and Augmentation 
+        - No edge and No Augmentation
+- Augmentation is used when you want to create more data from the data you already have.  A reason why augmentation can be so helpful is because it can allow your model to train off of features that may not have seemed important otherwise.  Applying augmentation will randomly rotate and distort every image so that your model can become more generalizable when presented with new, untrained data. 
+    
 
 ## Deployment 
 - [Flask Code](FlaskApp) (WEBSITE COMING SOON)
