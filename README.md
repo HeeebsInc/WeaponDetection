@@ -1,4 +1,5 @@
 # Weapon Detection System
+#### AI powered system for detecting weapons within videos/images (demonstration below)
 
 ## Contributers
 - Samuel Mohebban (B.A. Psychology- George Washington University) 
@@ -32,6 +33,7 @@
 - Data used in this project can be found on my Google Drive 
     - [Weapons](https://drive.google.com/file/d/1EZZKhCk0DK3S9zB53o3nWhKrZUbmN2Up/view?usp=sharing)
     - [No Weapons](https://drive.google.com/file/d/13PP-I6VdRt0mrVkquFxF_Y2HO6S1E0lR/view?usp=sharing)
+![ClassFreq](Figures/ClassFreq.png)
 - Total of 5000 images scraped from IMFDB.com- a website where gun enthusiasts post pictures where an actor is using a model gun within a movie 
     - [Scraping Code](Scraping)
 - The reason this website is useful for this problem is because it features pictures of people holding guns in various different angles.
@@ -189,7 +191,6 @@
         - Rifle: 0.93
         - Averaged: .95
     
-- Conveniently, the best models for each metric was the same: **No Edge and No Augmentation** 
 - As a final comparison, I looked at the differences in overall accuracy and loss between the two No Edge and No Augmentation models.  
 - Because Version 2 had a higher accuracy and a lower loss than compared with version 1, I chose to use Version 2 as the final model.  
 - The final architecture of the model is Version 2, No edge and No Augmentation.  

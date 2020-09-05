@@ -34,9 +34,10 @@ def get_image_value(path, dim, edge = False):
 
 def get_img_array(img_paths, dim, edge): 
     '''This fucntion takes a list of image paths and returns the np array corresponding to each image.  It also takes the dim and whether edge is specified in order to pass it to another function to apply these parameters.  This function uses get_image_value to perform these operations'''
-    from tqdm import tqdm
     final_array = []
-    for path in tqdm(img_paths): 
+#     from tqdm import tqdm
+#     for path in tqdm(img_paths):
+    for path in img_paths:
         img = get_image_value(path, dim, edge)
         final_array.append(img)
     final_array = np.array(final_array)
@@ -45,7 +46,7 @@ def get_img_array(img_paths, dim, edge):
     else: 
         return final_array
         
-def get_pickles(nn_type, version = 1, edge = False, balance = False):
+def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
     '''This function will creates a pickled file given the type of neural network architecture.  
     Using the Var.py file, the function will determine the specified dimension of the algorithm and create pickles given the NN type.  For this function to work, you must create a folder outside the repo called Pickles
     Version parameter corresponds to the type of train test split: 
@@ -130,10 +131,11 @@ def get_pickles(nn_type, version = 1, edge = False, balance = False):
     y_test = to_categorical(y_test)
     y_train = to_categorical(y_train)
     tts = (new_x_train, new_x_test, y_train, y_test)
-    if edge == True:
-        pickle.dump(tts, open(f'../Pickles/edge_{nn_type}_tts.p', 'wb'), protocol=4)
-    else:
-        pickle.dump(tts, open(f'../Pickles/{nn_type}_tts.p', 'wb'), protocol=4)
+    if pick == True:
+        if edge == True:
+            pickle.dump(tts, open(f'../Pickles/edge_{nn_type}_tts.p', 'wb'), protocol=4)
+        else:
+            pickle.dump(tts, open(f'../Pickles/{nn_type}_tts.p', 'wb'), protocol=4)
     
     return tts
 
