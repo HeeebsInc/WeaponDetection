@@ -151,31 +151,92 @@ def get_samples(nn_type, edge = False):
 
     return x_train, x_test, y_train, y_test
 
+def non_max_suppression(boxes, overlapThresh= .5):
+    # if there are no boxes, return an empty list
+    if len(boxes) == 0:
+        return []
+    # if the bounding boxes integers, convert them to floats --
+    # this is important since we'll be doing a bunch of divisions
+    if boxes.dtype.kind == "i":
+        boxes = boxes.astype("float")
+    # initialize the list of picked indexes	
+    pick = []
+    # grab the coordinates of the bounding boxes
+    x1 = boxes[:,0]
+    y1 = boxes[:,1]
+    x2 = boxes[:,2]
+    y2 = boxes[:,3]
+    # compute the area of the bounding boxes and sort the bounding
+    # boxes by the bottom-right y-coordinate of the bounding box
+    area = (x2 - x1 + 1) * (y2 - y1 + 1)
+    idxs = np.argsort(y2)
+    # keep looping while some indexes still remain in the indexes
+    # list
+    while len(idxs) > 0:
+        # grab the last index in the indexes list and add the
+        # index value to the list of picked indexes
+        last = len(idxs) - 1
+        i = idxs[last]
+        pick.append(i)
+        # find the largest (x, y) coordinates for the start of
+        # the bounding box and the smallest (x, y) coordinates
+        # for the end of the bounding box
+        xx1 = np.maximum(x1[i], x1[idxs[:last]])
+        yy1 = np.maximum(y1[i], y1[idxs[:last]])
+        xx2 = np.minimum(x2[i], x2[idxs[:last]])
+        yy2 = np.minimum(y2[i], y2[idxs[:last]])
+        # compute the width and height of the bounding box
+        w = np.maximum(0, xx2 - xx1 + 1)
+        h = np.maximum(0, yy2 - yy1 + 1)
+        # compute the ratio of overlap
+        overlap = (w * h) / area[idxs[:last]]
+        # delete all indexes from the index list that have
+        idxs = np.delete(idxs, np.concatenate(([last],
+            np.where(overlap > overlapThresh)[0])))
+    # return only the bounding boxes that were picked using the
+    # integer data type
+    return pick
+    return boxes[pick].astype("int")
+    
+
 def get_img_prediction_bounding_box(path, model, dim, edge = False):
     '''This function will create a bounding box over what it believes is a weapon given the image path, dimensions, and model used to detect the weapon.  Dimensions can be found within the Var.py file.  This function is still being used as I need to apply non-max suppresion to create only one bounding box'''
-    
     img = get_image_value(path, dim, edge = edge)
 
     if edge == True:
         img = img.reshape(1, img.shape[0], img.shape[1], 1)
     else: 
         img = img.reshape(1, img.shape[0], img.shape[1], 3)
+    
     pred = model.predict(img)[0]
     
     category_dict = {0: 'No Weapon', 1: 'Handgun', 2: 'Rifle'}
     cat_index = np.argmax(pred)
     cat = category_dict[cat_index]
-        
+    print(f'{path}\t\tPrediction: {cat}\t{int(pred.max()*100)}% Confident')
+    
+    
+    #speed up cv2
+    cv2.setUseOptimized(True)
+    cv2.setNumThreads(10)
+    
     img = cv2.imread(path)
+
+    clone = img.copy() 
+    clone2 = img.copy()
+    
+#     if cat_index != 0:
     ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
     ss.setBaseImage(img)
+#     ss.switchToSelectiveSearchQuality()
     ss.switchToSelectiveSearchFast()
+
     rects = ss.process() 
 
     windows = []
     locations = []
     print(f'Creating Bounding Boxes for {path}')
-    for x, y, w,h in rects: 
+    for x, y, w,h in rects[:1001]: 
         startx = x 
         starty = y 
         endx = x+w 
@@ -195,16 +256,49 @@ def get_img_prediction_bounding_box(path, model, dim, edge = False):
     windows = np.array(windows)
     locations = np.array(locations)
     predictions = model.predict(windows)
-    
-    pick = non_max_suppression(locations, probs = None)
-    clone = img.copy() 
-    clone2 = img.copy()
-    for idx in pick: 
-        startx, startx, endx, endy = locations[idx]
+    nms = non_max_suppression(locations)
+    print(nms)
+    bounding_cnt = 0
+    for idx in nms:
+        if np.argmax(predictions[idx]) != cat_index: 
+            continue
+#         print(np.argmax(predictions[idx]), predictions[idx].max())
+        startx, starty, endx, endy = locations[idx]
         cv2.rectangle(clone, (startx, starty), (endx, endy), (0,0,255), 2)
-        
+        text = f'{category_dict[np.argmax(predictions[idx])]}: {int(predictions[idx].max()*100)}%'
+        cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+        bounding_cnt += 1
+
+    if bounding_cnt == 0: 
+        pred_idx= [idx for idx, i in enumerate(predictions) if np.argmax(i) == cat_index]
+        cat_locations = np.array([locations[i] for i in pred_idx])
+        nms = non_max_suppression(cat_locations)
+        if len(nms)==0:
+            cat_predictions = predictions[:,cat_index]
+            pred_max_idx = np.argmax(cat_predictions)
+            pred_max = cat_predictions[pred_max_idx]
+
+            pred_max_window = locations[pred_max_idx]
+            startx, starty, endx, endy = pred_max_window
+            cv2.rectangle(clone, (startx, starty), (endx, endy),  (0,0,255),2)
+            text = f'{category_dict[cat_index]}: {int(pred_max*100)}%'
+            cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+        for idx in nms: 
+            startx, starty, endx, endy = cat_locations[idx]
+            cv2.rectangle(clone, (startx, starty), (endx, endy), (0,0,255), 2)
+            text = f'{category_dict[np.argmax(predictions[pred_idx[idx]])]}: {int(predictions[pred_idx[idx]].max()*100)}%'
+            cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+               
+
+
     
-#GOES HERE 
+#     pick = func.non_max_suppression(locations, probs = None)
+
+#     for idx in pick: 
+#         startx, startx, endx, endy = locations[idx]
+#         cv2.rectangle(clone, (startx, starty), (endx, endy), (0,0,255), 2)
+        
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     cv2.imshow(f'Test', np.hstack([clone, clone2]))
     cv2.waitKey(0)
     ss.clear()
@@ -235,70 +329,6 @@ def get_vid_frames(path, model, dim, edge = False):
     
     return images
 
-
-def non_max_suppression(boxes, probs, overlapThresh=0.5):
-    '''This function was taken and modified from PyImage search = a blog that teaches deep learning techniques using images. 
-    This function will extract all the bounding boxes with a certain threshold of overlap'''
-    # if there are no boxes, return an empty list
-    if len(boxes) == 0:
-        return []
-
-    # if the bounding boxes are integers, convert them to floats -- this
-    # is important since we'll be doing a bunch of divisions
-    if boxes.dtype.kind == "i":
-        boxes = boxes.astype("float")
-
-    # initialize the list of picked indexes
-    pick = []
-
-    # grab the coordinates of the bounding boxes
-    x1 = boxes[:, 0]
-    y1 = boxes[:, 1]
-    x2 = boxes[:, 2]
-    y2 = boxes[:, 3]
-
-    # compute the area of the bounding boxes and grab the indexes to sort
-    # (in the case that no probabilities are provided, simply sort on the
-    # bottom-left y-coordinate)
-    area = (x2 - x1 + 1) * (y2 - y1 + 1)
-    idxs = y2
-
-    # if probabilities are provided, sort on them instead
-    if probs is not None:
-        idxs = probs
-
-    # sort the indexes
-    idxs = np.argsort(idxs)
-    # keep looping while some indexes still remain in the indexes list
-    while len(idxs) > 0:
-        # grab the last index in the indexes list and add the index value
-        # to the list of picked indexes
-        last = len(idxs) - 1
-        i = idxs[last]
-        pick.append(i)
-
-        # find the largest (x, y) coordinates for the start of the bounding
-        # box and the smallest (x, y) coordinates for the end of the bounding
-        # box
-        xx1 = np.maximum(x1[i], x1[idxs[:last]])
-        yy1 = np.maximum(y1[i], y1[idxs[:last]])
-        xx2 = np.minimum(x2[i], x2[idxs[:last]])
-        yy2 = np.minimum(y2[i], y2[idxs[:last]])
-
-        # compute the width and height of the bounding box
-        w = np.maximum(0, xx2 - xx1 + 1)
-        h = np.maximum(0, yy2 - yy1 + 1)
-
-        # compute the ratio of overlap
-        overlap = (w * h) / area[idxs[:last]]
-
-        # delete all indexes from the index list that have overlap greater
-        # than the provided overlap threshold
-        idxs = np.delete(idxs, np.concatenate(([last],
-            np.where(overlap > overlapThresh)[0])))
-
-    # return the indexes of only the bounding boxes to keep
-    return pick
 
 
 def window_prob_func(img, model, dim, edge):

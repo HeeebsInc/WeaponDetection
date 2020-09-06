@@ -9,20 +9,48 @@
 <li> <a href="https://github.com/HeeebsInc/NN_Weapon_Detection">GitHub Repo</a></li>
 <li> <a href="https://www.linkedin.com/in/samuel-mohebban-b50732139/">LinkedIn Profile</a></li>
 
-<form action="/upload_picture">
-<input type = 'submit' value = 'Click Here To Upload Your Own Photo'>
+<form action="/upload_picture_normal">
+<input type = 'submit' value = 'Click Here To Test On The Model I Built'>
+</form>
+
+<form action="/upload_picture_mobilenet">
+<input type = 'submit' value = 'Click Here To Test On Mobilenet'>
 </form>
 
 <h2 style = "text-align:center;">Sliding Window for Predictions</h2>
 <p style = "text-align:center;">
-This is where the sliding window description goes
+<ol>
+<li> Input an image or frame within a video and retrieve a base prediction </li>
+<li> Apply selective search segmentation to create hundred or thousands of bounding box propositions </li>
+<li> Run each bounding box through the trained algorithm and retrieve the locations where the prediction is the same as the base predictions (in step 1)</li>
+<li> After retrieving the locations where the algorithm predicted the same as the base prediction, mark the bounding box on the location</li>
+<li> if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)</li>
+</ol>
+<li> Note: Non max suppression is a still a work in progress. In some instances it can only detect features of the gun rather than the entire gun itself(see model comparisons below)</li>
+
 </p>
 <p style = "text-align:center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mtskarJnd3I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <img src = 'static/SlidingWindow.gif' alt = 'Sliding Window'/>
 </p>
 <h2 style = "text-align:center;">Demo Video <a href="https://www.youtube.com/watch?v=0FlnM0edQhA">(Original Youtube Link)</h2>
+
 <p style = "text-align:center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DUsreaqR_tc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <img src = 'static/VideoGif.gif' alt = 'Demo'/>
+
+</p>
+
+<h2 style = "text-align:center;">Model Comparisons</h2>
+<h3 style = "text-align:center;">BaseImages</h3>
+<p style = "text-align:center;">
+    <img src = 'static/TestImages.png' alt = 'BaseImages'/>
+<h3 style = "text-align:center;">Model I Built</h3>
+<p style = "text-align:center;">
+    <img src = 'static/Normal.png' alt = 'CNN'/>
+
+<h3 style = "text-align:center;">Mobilenet</h3>
+<p style = "text-align:center;">
+    <img src = 'static/Mobilenet.png' alt = 'Mobilnet'/>
+
 </p>
 </body>
 </html>
