@@ -215,23 +215,36 @@
     3) Run each bounding box through the trained algorithm and retrieve the locations where the prediction is the same as the base predictions (in step 1) 
     4) After retrieving the locations where the algorithm predicted the same as the base prediction, mark the bounding box on the location
     5) if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)
-    - **Note**:  Non max suppression is a still a work in progress.  In some instances it can only stect features of the gun rather than the entire gun itself(see example below)  
+    - **Note**:  Non max suppression is a still a work in progress.  In some instances it can only detect features of the gun rather than the entire gun itself(see model comparisons below)  
     
 ![SlidingWindow](Figures/SlidingWindow.gif)
-#### Where NMS Works  
-![NMS](Figures/NMS.png)
-
-### Where NMS Does Not Work
-![NMSBad](Figures/NMSBAd.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
-- I want to note that there are some issues with NMS as these will be fixes in the next week.  
+- I want to note that there are some issues with NMS as these are still being worked on.  
 
 ![VideoDemo](Figures/Demo.gif)
 
+## Comparing Model Performances
+
+- For each model, I compared the accuracy using the images below
+
+![TestImages](Figures/TestImages.png)
+
+### Original CNN
+
+![Normal](Figures/Normal.png)
+
+### Mobilenet
+
+![Mobilenet](Figures/Mobilenet.png)
+
+- In the examples above, each model was better at predicting certain features.  
+- Non max suppression was different between models
+- Mobilenet is better at predicting objects that are not a weapon (class 0 = no weapon)
+
 
 ## Limitations
-- Splitting a video into frames and processing each image can take anywhere between 1-3 seconds per image depending on the computer 
+- Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
 - Right now, this cannot be applied to live video due to speed concerns 
 - Results have a lot of false positives which are problematic for real world situations
 
