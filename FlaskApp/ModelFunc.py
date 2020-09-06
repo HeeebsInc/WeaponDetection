@@ -51,7 +51,7 @@ def get_conv_model(dim = (150,150, 3), model_weights = 'NN_Weapon_Detection/Flas
     return model
 
 
-def get_mobilenet(dim = (224,224, 3), model_weights = 'NN_Weapon_Detection/FlaskApp/Mobilenet.h5'):
+def get_mobilenet(dim = (224,224, 3), model_weights = 'NN_Weapon_Detection/FlaskApp/MobilenetOld.h5'):
     '''This function will create, compile and return the mobilenet neural network given the input dimensions.  '''
     model = Sequential()
     optimizer = Adam(lr=.0005)
@@ -59,11 +59,11 @@ def get_mobilenet(dim = (224,224, 3), model_weights = 'NN_Weapon_Detection/Flask
                             input_tensor=Input(shape=dim))
 
     model.add(baseModel)
-    headModel = model.add(AveragePooling2D(pool_size=(7, 7)))
-    headModel = model.add(Flatten(name="flatten"))
-    headModel = model.add(Dense(256, activation="relu"))
-    headModel = model.add(Dropout(0.3))
-    headModel = model.add(Dense(3, activation="softmax", name='Output'))
+    model.add(AveragePooling2D(pool_size=(7, 7)))
+    model.add(Flatten(name="flatten"))
+    model.add(Dense(256, activation="relu"))
+    model.add(Dropout(0.3))
+    model.add(Dense(3, activation="softmax", name='Output'))
 
     for layer in baseModel.layers:
         layer.trainable = False

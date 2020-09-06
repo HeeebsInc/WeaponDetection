@@ -68,7 +68,7 @@
 - Categorical Crossentropy was used because the model is used to predict between three classes (0 = No Weapon, 1 = Handgun, 2 = Rifle) 
 - Softmax output was used because this is a ternary classification problem 
 - To ensure that training continued for more than 20 epochs learning rate was reduced to .0001
-- All visualization functions can be found in the Viz.py file within the PyFunctions folder
+- All visualization functions can be found in the [Viz.py](PyFunctions/Viz.py) file within the [PyFunctions](PyFunctions) folder
 - For each iteration of the model, we will compare the results between augmentation and non-augmentation, edge and no edge,  as well as the results between using ROI negative dataset compared with the hand_dataset of people
 - For each version, there will be 4 iterations of the model, combining to a total of 8 run throughs
     - **Version 1** (ROI and Hand Dataset)
@@ -202,7 +202,7 @@
     1) Mobilenet
     
 ### Mobilenet
-
+- Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
 ![MobileLoss](Figures/MobileLossAcc.png)
 ![MobileRoc](Figures/MobileROC.png)
 ![MobileCM](Figures/MobileCM.png)
