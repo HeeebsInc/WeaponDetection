@@ -193,25 +193,36 @@
     
 - As a final comparison, I looked at the differences in overall accuracy and loss between the two No Edge and No Augmentation models.  
 - Because Version 2 had a higher accuracy and a lower loss than compared with version 1, I chose to use Version 2 as the final model.  
-- The final architecture of the model is Version 2, No edge and No Augmentation.  
+- The final architecture of the model is Version 2, No edge and No Augmentation. The corresponding confusion matrix for this model can be found below  
 
-![LossAcc](Figures/V2LossAcc_NoEdge_NoAugmentation.png)
-![ROC](Figures/V2ROC_NoEdge_NoAugmentation.png)
 ![CM](Figures/V2CM_NoEdge_NoAugmentation.png)
 
+## Transfer Learning 
+- After completing my own model, I tried the following pre-built models to compare performance: 
+    1) Mobilenet
+    
+### Mobilenet
+
+![MobileLoss](Figures/MobileLossAcc.png)
+![MobileRoc](Figures/MobileROC.png)
+![MobileCM](Figures/MobileCM.png)
 
 ## Deployment 
 - [Flask Code](FlaskApp) (WEBSITE COMING SOON)
 - The way the deployment architecture works is as follows: 
-    1) Input an image or frame within a video 
-    2) Apply selective search segmentation to create hundred or thousands of bounding box propositions.  This approach can be considered a sliding window (shown below)
-    3) Run each bounding box through the trained algorithm and retrieve the corresponding predictions 
-    4) If a gun is predicted, mark the bounding box onto the original image 
+    1) Input an image or frame within a video and retrieve a base prediction
+    2) Apply selective search segmentation to create hundred or thousands of bounding box propositions
+    3) Run each bounding box through the trained algorithm and retrieve the locations where the prediction is the same as the base predictions (in step 1) 
+    4) After retrieving the locations where the algorithm predicted the same as the base prediction, mark the bounding box on the location
     5) if multiple bounding boxes are chosen, apply non max suppression to suppress all but one box, leaving the box with the highest probability and best Region of Interest (ROI)
+    - **Note**:  Non max suppression is a still a work in progress.  In some instances it can only stect features of the gun rather than the entire gun itself(see example below)  
     
 ![SlidingWindow](Figures/SlidingWindow.gif)
-     
+#### Where NMS Works  
 ![NMS](Figures/NMS.png)
+
+### Where NMS Does Not Work
+![NMSBad](Figures/NMSBAd.png)
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
 - I want to note that there are some issues with NMS as these will be fixes in the next week.  
@@ -225,9 +236,8 @@
 - Results have a lot of false positives which are problematic for real world situations
 
 ## Future Directions 
-- Using Transfer Learning 
-    - Using models that are already trained on objects such as people could be decrease false positive rates as it would be better at distinguishing objects that are not guns
-- More data.  Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
+- Use more Transfer Learning Models --> these models are already trained on objects such as people, therefore they could decrease false positive rates as it they are better at distinguishing objects that are not guns
+- More data. Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
     
     
     
