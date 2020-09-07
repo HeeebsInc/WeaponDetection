@@ -263,7 +263,6 @@ def get_img_prediction_bounding_box(path, model, dim, edge = False, model_type =
 #         windows = preprocess_input(windows)
     predictions = model.predict(windows)
     nms = non_max_suppression(locations)
-    print(nms)
     bounding_cnt = 0
     for idx in nms:
         if np.argmax(predictions[idx]) != cat_index: 
