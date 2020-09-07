@@ -84,6 +84,8 @@
         - No edge and No Augmentation
 - Augmentation is used when you want to create more data from the data you already have.  A reason why augmentation can be so helpful is because it can allow your model to train off of features that may not have seemed important otherwise.  Applying augmentation will randomly rotate and distort every image so that your model can become more generalizable when presented with new, untrained data. 
 ## Modeling 
+
+- A walk through of these steps can be found in [this](TechnicalNotebook.ipynb)
    
 #### Version 1 (F1 Scores- Test)
 - **Edge & Augmentation**
@@ -213,7 +215,7 @@
 ![MobileCM](Figures/MV2CM_NoEdge_NoAugment.png)
 
 ## Deployment 
-- [Flask Code](FlaskApp) (WEBSITE COMING SOON) --> The website I built is not yet deployed on a public server.  However, if you would like to see it then clone the repo, and run the [app.py](FlaskApp/app.py) file to see how it would work on your local machine
+- [Flask Code](FlaskApp) (WEBSITE COMING SOON) --> The website I built is not yet deployed on a public server.  However, if you would like to see it then clone the repo, and run the [app.py](FlaskApp/app.py) file to see work on your local machine
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video and retrieve a base prediction
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions
