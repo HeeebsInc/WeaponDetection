@@ -193,8 +193,10 @@
     
 - As a final comparison, I looked at the differences in overall accuracy and loss between the two No Edge and No Augmentation models.  
 - Because Version 2 had a higher accuracy and a lower loss than compared with version 1, I chose to use Version 2 as the final model.  
-- The final architecture of the model is Version 2, No edge and No Augmentation. The corresponding confusion matrix for this model can be found below  
+- The final architecture of the model is Version 2, No edge and No Augmentation. The corresponding Loss, accuracy, ROC curves, and confusion matrix for this model can be found below  
 
+![CM](Figures/V2LossAcc_NoEdge_NoAugmentation.png)
+![CM](Figures/V2ROC_NoEdge_NoAugmentation.png)
 ![CM](Figures/V2CM_NoEdge_NoAugmentation.png)
 
 ## Transfer Learning 
