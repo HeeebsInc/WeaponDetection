@@ -200,15 +200,17 @@
 ## Transfer Learning 
 - After completing my own model, I tried the following pre-built models to compare performance: 
     1) Mobilenet
+    2) VGG16 (In Progress)
     
 ### Mobilenet
 - Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
-![MobileLoss](Figures/MobileLossAcc.png)
-![MobileRoc](Figures/MobileROC.png)
-![MobileCM](Figures/MobileCM.png)
+![MobileLoss](Figures/MV2LossAcc_NoEdge_NoAugment.png)
+![MobileRoc](Figures/MV2ROC_NoEdge_NoAugment.png)
+![MobileCM](Figures/MV2CM_NoEdge_NoAugment.png)
 
 ## Deployment 
 - [Flask Code](FlaskApp) (WEBSITE COMING SOON)
+- The website I built is not yet deployed on a public server.  However, if you would like to see it then clone the repo, and run the [app.py](FlaskApp/app.py) file to see how it would work on your local machine
 - The way the deployment architecture works is as follows: 
     1) Input an image or frame within a video and retrieve a base prediction
     2) Apply selective search segmentation to create hundred or thousands of bounding box propositions

@@ -311,7 +311,7 @@ def get_img_prediction_bounding_box(path, model, dim, edge = False, model_type =
 
     return predictions
 
-def get_vid_frames(path, model, dim, edge = False): 
+def get_vid_frames(path, model, dim, vid_name, edge = False): 
     '''This function will take a path to an mp4 file and return a list containing each frame of the video.  This function is used for creating bounding boxes within a video'''
     from tqdm import tqdm
     vid = cv2.VideoCapture(path)
@@ -328,53 +328,99 @@ def get_vid_frames(path, model, dim, edge = False):
         except: 
             break
         
-
     pbar.close()
     images = np.array(images)
     
-    return images
-
-
-
-def window_prob_func(img, model, dim, edge):
-    '''Given an image, this function will extract the segmented bounding boxes and return the ones with the rest ROI (using non_max_suppresion.  If there is no overlap, it will return None)'''
-    ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-    ss.setBaseImage(img)
-    ss.switchToSelectiveSearchFast()
-    rects = ss.process() 
-
-    windows = []
-    locations = []
-    for x, y, w,h in rects: 
-        startx = x 
-        starty = y 
-        endx = x+w 
-        endy = y+h 
-        roi = img[starty:endy, startx:endx]
+    clones = []
+    print(f'Creating {vidname}.mp4')
+    for img in tqdm(images, desc = 'Getting Base Prediction and Extracting Sliding Window... Sit Back, This Will Take A While'): 
         if edge == True:
-            roi = get_edged(roi, dim = dim)
-        roi = cv2.resize(roi, dsize =dim, interpolation = cv2.INTER_CUBIC)
-        windows.append(roi)
-        locations.append((startx, starty, endx, endy))
+            img2 = img.reshape(1, img.shape[0], img.shape[1], 1)
+        else: 
+            img2 = img.reshape(1, img.shape[0], img.shape[1], 3)
+        clone = img.copy()
 
-    windows = np.array(windows)
-    if edge == True:
-        windows = windows.reshape(windows.shape[0], windows.shape[1], windows.shape[2], 1)
-    else: 
-        windows = windows.reshape(windows.shape[0], windows.shape[1], windows.shape[2], 3)
-    predictions = model.predict(windows)
-    locations = np.array(locations)
+        pred = model.predict(img2)[0]
 
-    pick = non_max_suppression(locations, probs = None)
-    for idx in pick: 
-        prob = predictions[idx]
-        if np.argmax(prob) == 0: 
+        category_dict = {0: 'No Weapon', 1: 'Handgun', 2: 'Rifle'}
+        cat_index = np.argmax(pred)
+        cat = category_dict[cat_index]
+        #if the prediction is non_weapon then continue to the next without creating a bounding box
+        if cat_index == 0: 
+            clones.append(clone)
             continue
-        startx, startx, endx, endy = locations[idx]
-        return (prob, (startx, starty, endx, endy))
+        if cat in ['Handgun', 'Rifle']: 
+            cat = 'Weapon'
+        ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
+        ss.setBaseImage(img)
+    #     ss.switchToSelectiveSearchQuality()
+        ss.switchToSelectiveSearchFast()
 
+        rects = ss.process() 
+
+        windows = []
+        locations = []
+        for x, y, w,h in rects[:1001]: 
+            startx = x 
+            starty = y 
+            endx = x+w 
+            endy = y+h 
+            roi = img[starty:endy, startx:endx]
+            if edge == True:
+                roi = get_edged(roi, dim = dim)
+            roi = cv2.resize(roi, dsize =dim, interpolation = cv2.INTER_CUBIC)
+            windows.append(roi)
+            locations.append((startx, starty, endx, endy))
+
+        windows = np.array(windows)
+        if edge == True:
+            windows = windows.reshape(windows.shape[0], windows.shape[1], windows.shape[2], 1)
+        else: 
+            windows = windows.reshape(windows.shape[0], windows.shape[1], windows.shape[2], 3)
+        windows = np.array(windows)
+        locations = np.array(locations)
+
+        predictions = model.predict(windows)
+        nms = non_max_suppression(locations)
+        bounding_cnt = 0
+        for idx in nms:
+            if np.argmax(predictions[idx]) != cat_index: 
+                continue
+            startx, starty, endx, endy = locations[idx]
+            cv2.rectangle(clone, (startx, starty), (endx, endy), (0,0,255), 2)
+            text = f'{cat}: {int(predictions[idx].max()*100)}%'
+            cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+            bounding_cnt += 1
+
+        if bounding_cnt == 0: 
+            pred_idx= [idx for idx, i in enumerate(predictions) if np.argmax(i) == cat_index]
+            cat_locations = np.array([locations[i] for i in pred_idx])
+            nms = non_max_suppression(cat_locations)
+            if len(nms)==0:
+                cat_predictions = predictions[:,cat_index]
+                pred_max_idx = np.argmax(cat_predictions)
+                pred_max = cat_predictions[pred_max_idx]
+
+                pred_max_window = locations[pred_max_idx]
+                startx, starty, endx, endy = pred_max_window
+                cv2.rectangle(clone, (startx, starty), (endx, endy),  (0,0,255),2)
+                text = f'{category_dict[cat_index]}: {int(pred_max*100)}%'
+                cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+            for idx in nms: 
+                startx, starty, endx, endy = cat_locations[idx]
+                cv2.rectangle(clone, (startx, starty), (endx, endy), (0,0,255), 2)
+                text = f'{cat}: {int(predictions[pred_idx[idx]].max()*100)}%'
+                cv2.putText(clone, text, (startx, starty+15), cv2.FONT_HERSHEY_SIMPLEX, .5, (0,255,0),2)
+        clones.append(clone)
         
-    return None
+    vid_dim = dim
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter(f'Tests/VideoOutput/{vid_name}.mp4',fourcc, 10, vid_dim) #change the filename to whatever you would like
+
+    out_writer = [out.write(i) for i in clones]
+    out.release()
+    cv2.destroyAllWindows()
+    return clones
 
 
 
