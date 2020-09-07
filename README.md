@@ -252,6 +252,14 @@
 - Right now, this cannot be applied to live video due to speed concerns 
 - Results have a lot of false positives which are problematic for real world situations
 
+## Recommendations 
+- Splitting a video into frames and processing each image can take anywhere between 1-3 seconds per image (depending on the computer)   
+- Right now, this cannot be applied to live video  
+- Reviewing video after altercation: 
+    - Body cam footage to determine if there was in fact a gun present
+    - Gun counts at protests
+
+
 ## Future Directions 
 - Use more Transfer Learning Models --> these models are already trained on objects such as people, therefore they could decrease false positive rates as it they are better at distinguishing objects that are not guns
 - More data. Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
