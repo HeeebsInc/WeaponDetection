@@ -6,7 +6,7 @@
     - Samuel.Mohebbanjob@gmail.com
     - [LinkedIn](https://www.linkedin.com/in/samuel-mohebban-b50732139/)
     - [Medium](https://medium.com/@HeeebsInc)
-    - [GoogleSlides](https://docs.google.com/presentation/d/1yFLW9ku_h9B75V2O8RH7AefB-dC_6_SlKAlIt8v51aY/edit?usp=sharing)
+    - [Google Slides Presentation](https://docs.google.com/presentation/d/1yFLW9ku_h9B75V2O8RH7AefB-dC_6_SlKAlIt8v51aY/edit?usp=sharing)
 
 ## Business Problem
 - Mass shootings have become increasingly prevalent at public gatherings 
