@@ -85,7 +85,7 @@
 - Augmentation is used when you want to create more data from the data you already have.  A reason why augmentation can be so helpful is because it can allow your model to train off of features that may not have seemed important otherwise.  Applying augmentation will randomly rotate and distort every image so that your model can become more generalizable when presented with new, untrained data. 
 ## Modeling 
 
-- A walk through of these steps can be found in [this](TechnicalNotebook.ipynb)
+- A walk through of these steps can be found in the [Technical Notebook](TechnicalNotebook.ipynb)
    
 #### Version 1 (F1 Scores- Test)
 - **Edge & Augmentation**
