@@ -204,6 +204,7 @@
     
 ### Mobilenet
 - Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
+
 ![MobileLoss](Figures/MV2LossAcc_NoEdge_NoAugment.png)
 ![MobileRoc](Figures/MV2ROC_NoEdge_NoAugment.png)
 ![MobileCM](Figures/MV2CM_NoEdge_NoAugment.png)
@@ -224,7 +225,7 @@
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
 - I want to note that there are some issues with NMS as these are still being worked on.  
 
-![VideoDemo](Figures/Demo.gif)
+![VideoDemo](Figures/Demonew.gif)
 
 ## Comparing Model Performances
 
