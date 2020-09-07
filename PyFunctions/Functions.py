@@ -9,8 +9,6 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from keras.utils import to_categorical
 from PyFunctions import var
-import random
-
 
 
 def get_edged(img, dim): 
@@ -32,7 +30,7 @@ def get_image_value(path, dim, edge = False):
         img = image.img_to_array(img)
         return img/255
 
-def get_img_array(img_paths, dim, edge): 
+def get_img_array(img_paths, dim, edge, nn_type = 'normal'): 
     '''This fucntion takes a list of image paths and returns the np array corresponding to each image.  It also takes the dim and whether edge is specified in order to pass it to another function to apply these parameters.  This function uses get_image_value to perform these operations'''
     final_array = []
 #     from tqdm import tqdm
@@ -42,6 +40,8 @@ def get_img_array(img_paths, dim, edge):
         final_array.append(img)
     final_array = np.array(final_array)
     if edge:
+        if nn_type != 'normal': 
+            return np.stack((final_array,)*3, axis = -1)
         return final_array.reshape(final_array.shape[0], final_array.shape[1], final_array.shape[2], 1)
     else: 
         return final_array
@@ -54,7 +54,9 @@ def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
         version = 2 --> using positive and negative ROI
           
         edge --> corresponds to whether it should apply edge detection to the photos within the split'''
-        
+    if nn_type not in ['normal', 'mobilenet', 'vgg16']: 
+        assert False
+    
     if nn_type == 'normal': 
         DIM =  var.norm_dimension 
     elif nn_type == 'mobilenet': 
@@ -67,7 +69,7 @@ def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
         DIM = var.vgg_dimension
     elif nn_type == 'alexnet': 
         DIM = var.alex_dimension
-
+    np.random.seed(10)
 #Using Seperated ROI ang hand data 
     if version == 1:
         pistol_paths = [f'../Separated/FinalImages/Pistol/{i}' for i in os.listdir('../Separated/FinalImages/Pistol')] 
@@ -77,7 +79,7 @@ def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
         rifle_labels = [2 for i in range(len(rifle_paths))]    
 
         neg_paths = [f'../hand_dataset/Neg/{i}' for i in os.listdir('../hand_dataset/Neg')]
-        random.shuffle(neg_paths)
+        np.random.shuffle(neg_paths)
         neg_paths = neg_paths[:len(pistol_paths)- 500]
         neg_labels = [0 for i in range(len(neg_paths))]
         
@@ -89,13 +91,13 @@ def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
         rifle_labels = [2 for i in range(len(rifle_paths))]    
 
         neg_paths = [f'../Separated/FinalImages/NoWeapon/{i}' for i in os.listdir('../Separated/FinalImages/NoWeapon')]
-        random.shuffle(neg_paths)
+        np.random.shuffle(neg_paths)
         neg_paths = neg_paths[:len(pistol_paths)- 500]
         neg_labels = [0 for i in range(len(neg_paths))]
         
         
     if balance == True: 
-        random.shuffle(pistol_paths)
+        np.random.shuffle(pistol_paths)
         pistol_paths = pistol_paths[:len(rifle_paths)+150]
         neg_paths = neg_paths[:len(rifle_paths)+150]
         
@@ -107,8 +109,8 @@ def get_tts(nn_type, version = 1, edge = False, balance = False, pick = False):
     x_train, x_test, y_train, y_test = train_test_split(paths, labels, stratify = labels, train_size = .90, random_state = 10)
 
     if edge == True:      
-        new_x_train = get_img_array(x_train, DIM, edge = True)
-        new_x_test = get_img_array(x_test, DIM, edge = True)
+        new_x_train = get_img_array(x_train, DIM, nn_type = nn_type, edge = True)
+        new_x_test = get_img_array(x_test, DIM, nn_type = nn_type, edge = True)
     else: 
         new_x_train = get_img_array(x_train, DIM, edge = False)
         new_x_test = get_img_array(x_test, DIM, edge = False)
@@ -199,7 +201,7 @@ def non_max_suppression(boxes, overlapThresh= .5):
     return boxes[pick].astype("int")
     
 
-def get_img_prediction_bounding_box(path, model, dim, edge = False):
+def get_img_prediction_bounding_box(path, model, dim, edge = False, model_type = 'normal'):
     '''This function will create a bounding box over what it believes is a weapon given the image path, dimensions, and model used to detect the weapon.  Dimensions can be found within the Var.py file.  This function is still being used as I need to apply non-max suppresion to create only one bounding box'''
     img = get_image_value(path, dim, edge = edge)
 
@@ -255,6 +257,10 @@ def get_img_prediction_bounding_box(path, model, dim, edge = False):
         windows = windows.reshape(windows.shape[0], windows.shape[1], windows.shape[2], 3)
     windows = np.array(windows)
     locations = np.array(locations)
+    
+#     if model_type == 'mobilenet': 
+#         from keras.applications.mobilenet import preprocess_input
+#         windows = preprocess_input(windows)
     predictions = model.predict(windows)
     nms = non_max_suppression(locations)
     print(nms)
