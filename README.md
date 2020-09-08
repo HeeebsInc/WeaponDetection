@@ -172,13 +172,13 @@
 
 #### Original CNN
 
-![Normal](Figures/Normal.png)
+![Normal](Figures/ModelComparisons/Normal/Normal.png)
 
 - The neural network I build incorrectly classified a non weapon as a rifle, and incorrectly classified a hand gun as a rifle.  Everything else was correctly classified
 
 #### Mobilenet
 
-![Mobilenet](Figures/Mobilenet.png)
+![Mobilenet](Figures/ModelComparisons/Mobilenet/Mobilenet.png)
 
 - In the examples above, each model was better at predicting certain features.  
 - Non max suppression was different between models
@@ -187,6 +187,12 @@
 
 #### VGG16 
 
+![VGG16](Figures/ModelComparisons/VGG16/VGG16.png)
+
+- In the example above, VGG16 was unable to distinguish non weapon
+- VGG16 was able to classify rifle
+- It incorrectly classified 1 out 3 handgun images as no weapon, while correctly classifying the rest as handgun
+- Although it incorrectly classified a hand gun image as having no weapon, the bounding boxes were not on the gun whatsoever and stayed on the hand holding the gun
 
 ## LIME: Feature Extraction
 - In this section of the notebook, I use [LIME](https://github.com/marcotcr/lime)- a python package that can be used for feature extraction of black box models 
