@@ -238,7 +238,6 @@
 #### VGG16
 
 ![LimeVGG16](Figures/VGG16/VGGLime.png)
-
 # Final Thoughts 
 
 ## Limitations
@@ -251,10 +250,12 @@
 - The current system can be used for other things such as retroactive video review: 
     - Body cam footage
     - Gun counts at protests
+    - Violent online videos 
 - Applying the algorithm to the examples above will provide an un-bias input for a given altercation. 
 - For example, if a police officer claimed to have used force on a person due to them thinking that person had a gun, this algorithm can be used to determine a timeline that maps the escalation in chronological order.  
 - Although this algorithm should not be used as a defining classifier, it can be used in conjunction with investigations in order to determine if the right decision was made. 
 - On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public spaced.  
+- Finally, this algorithm can be used to detect the presence of a weapon in a video after it has been uploaded to a social media site (such as YouTube.com).  Using this alrogithm to detect weapons within an uploaded video would be faster and more efficient then having a team do it manually.  
 
 #### Things to Consider
 - **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wold scenario 
@@ -278,6 +279,7 @@
     
         
 I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
+
 
 
  
