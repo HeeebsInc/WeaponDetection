@@ -244,6 +244,7 @@
 ## Limitations
 - Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
 - Results have a lot of false positives which are problematic for real world situations
+- Modern video surveillance equipment records at a rate of (30 fps?), but we do not need to run the algorithm on all 30 frames. This would be computationally expensive, and a large amount of processing would be wasted on video that does not even contain people in it. It could be used as part of a pipeline that activates when the camera detects movement/a person in the frame, and we could sample and process 3 frames per second (utilizing only 10% of the video) on a much faster, centralized server 
 
 ## Recommendations 
 - Although this process is slow on my current hardware, it could in fact be fast enough using parallel computing or more advanced GPUs (2080ti or Nvidia 3000 series cards)
@@ -251,7 +252,7 @@
     - Body cam footage
     - Gun counts at protests
 - Applying the algorithm to the examples above will provide an un-bias input for a given altercation. 
-- For example, if a police officer claimed to have used force on a person due to them thinking that person had a gun, this algorithm can be used to determine if there was in fact a gun present within the footage shot through their body camera.  
+- For example, if a police officer claimed to have used force on a person due to them thinking that person had a gun, this algorithm can be used to determine a timeline that maps the escalation in chronological order.  
 - Although this algorithm should not be used as a defining classifier, it can be used in conjunction with investigations in order to determine if the right decision was made. 
 - On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public spaced.  
 
@@ -262,7 +263,8 @@
     1. If a weapon is detected as present, it should not notify police/law enforcement directly. 
     2. Instead, if a weapon is detected it should be relayed to personnel working within the building/area 
     3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
-- an intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.  
+- An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.
+    - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.    
 - The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present.  
 
 
@@ -270,11 +272,7 @@
 - Use more Transfer Learning Models --> these models are already trained on objects such as people, therefore they could decrease false positive rates as it they are better at distinguishing objects that are not guns
 - More data. Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
     
-    
-        
-    
+          
 I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
-
-
 
  
