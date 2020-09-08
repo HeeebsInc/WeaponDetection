@@ -139,6 +139,8 @@
 
 ![MobileLoss](Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png)
 ![MobileRoc](Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png)
+<img src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png" alt="Image" width="800" height="600" style="display: block; margin: 0 auto" />
+
 ![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
 
 ### VGG16 
