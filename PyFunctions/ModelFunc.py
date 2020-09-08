@@ -5,9 +5,34 @@ from keras.optimizers import Adam
 from keras import regularizers
 from keras.applications import MobileNetV2
 from keras.applications.mobilenet_v2 import preprocess_input
+from keras.applications.vgg16 import VGG16
 
 
 
+
+def get_vgg16(dim):
+    model = Sequential()
+    baseModel = VGG16(weights="imagenet", include_top=False,
+        input_tensor=Input(shape=dim))
+    
+    model.add(baseModel)
+    headModel = model.add(AveragePooling2D(pool_size=(7, 7)))
+    headModel = model.add(Flatten(name="flatten"))
+    headModel = model.add(Dense(128, activation="relu"))
+    headModel = model.add(Dropout(0.3))
+    headModel = model.add(Dense(3, activation="softmax", name = 'Output'))
+
+    # place the head FC model on top of the base model (this will become
+    # the actual model we will train)
+
+
+    # loop over all layers in the base model and freeze them so they will
+    # *not* be updated during the first training process
+    for layer in baseModel.layers:
+        layer.trainable = False
+    
+    model.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
+    return model
 
 
 def get_conv_model(dim):

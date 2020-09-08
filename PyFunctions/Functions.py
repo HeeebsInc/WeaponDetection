@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from keras.utils import to_categorical
 from PyFunctions import var
+from skimage.segmentation import mark_boundaries 
+
 
 
 def get_edged(img, dim): 
@@ -311,6 +313,39 @@ def get_img_prediction_bounding_box(path, model, dim, edge = False, model_type =
 
     return predictions
 
+
+
+def get_lime_predictions(base_folder, model, dim, save_name= None, iter = 3500): 
+    from lime import lime_image
+
+    '''This function will take a base folder containing images that will be run through the LIME package.  It will save the figure if a 
+    save_name is passed. '''
+    lime_images = [] 
+    original_images = []
+    for file in os.listdir(base_folder): 
+        print(f'Creating Lime Image for {file}')
+        path = f'{base_folder}/{file}'
+        img = get_image_value(path, dim)
+        original_images.append(img)
+        explainer = lime_image.LimeImageExplainer()
+        explanation = explainer.explain_instance(img, model.predict, top_labels = 5, hide_color = 0, num_samples = iter)
+        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only = False, num_features = 10, 
+                                                   hide_rest = False)
+        lime_img = mark_boundaries(temp/2 + .5, mask)
+        lime_images.append(lime_img)
+    lime_images = np.hstack(lime_images)
+    original_images = np.hstack(original_images)
+    joined_images = np.vstack([original_images, lime_images])
+#     cv2.imshow('Lime', joined_images)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
+    plt.figure(figsize = (13,13))
+    plt.imshow(joined_images)
+    
+    if save_name: 
+        plt.savefig(f'{save_name}')
+#         cv2.imwrite(save_name, joined_images)
+
 def get_vid_frames(path, model, dim, vid_name, edge = False): 
     '''This function will take a path to an mp4 file and return a list containing each frame of the video.  This function is used for creating bounding boxes within a video'''
     from tqdm import tqdm
@@ -332,7 +367,7 @@ def get_vid_frames(path, model, dim, vid_name, edge = False):
     images = np.array(images)
     
     clones = []
-    print(f'Creating {vidname}.mp4')
+    print(f'Creating {vid_name}.mp4')
     for img in tqdm(images, desc = 'Getting Base Prediction and Extracting Sliding Window... Sit Back, This Will Take A While'): 
         if edge == True:
             img2 = img.reshape(1, img.shape[0], img.shape[1], 1)

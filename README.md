@@ -198,9 +198,9 @@
 - Because Version 2 had a higher accuracy and a lower loss than compared with version 1, I chose to use Version 2 as the final model.  
 - The final architecture of the model is Version 2, No edge and No Augmentation. The corresponding Loss, accuracy, ROC curves, and confusion matrix for this model can be found below  
 
-![CM](Figures/V2LossAcc_NoEdge_NoAugmentation.png)
-![CM](Figures/V2ROC_NoEdge_NoAugmentation.png)
-![CM](Figures/V2CM_NoEdge_NoAugmentation.png)
+![CM](Figures/Normal/V2LossAcc_NoEdge_NoAugmentation.png)
+![CM](Figures/Normal/V2ROC_NoEdge_NoAugmentation.png)
+![CM](Figures/Normal/V2CM_NoEdge_NoAugmentation.png)
 
 ## Transfer Learning 
 - After completing my own model, I tried the following pre-built models to compare performance: 
@@ -210,9 +210,14 @@
 ### Mobilenet
 - Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
 
-![MobileLoss](Figures/MV2LossAcc_NoEdge_NoAugment.png)
-![MobileRoc](Figures/MV2ROC_NoEdge_NoAugment.png)
-![MobileCM](Figures/MV2CM_NoEdge_NoAugment.png)
+![MobileLoss](Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png)
+![MobileRoc](Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png)
+![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
+
+### VGG16 
+![VGGLoss](Figures/VGG16/VGGV2LossAcc_NoAugment.png)
+![VGGRoc](Figures/VGG16/VGGV2ROC_NoAugment.png)
+![VGGCM](Figures/VGG16/VGGV2CM_NoAugment.png)
 
 ## Deployment 
 - [Flask Code](FlaskApp) (WEBSITE COMING SOON) --> The website I built is not yet deployed on a public server.  However, if you would like to see it then clone the repo, and run the [app.py](FlaskApp/app.py) file to see work on your local machine
@@ -249,6 +254,22 @@
 - Non max suppression was different between models
 - Mobilenet is better at predicting objects that are not a weapon (class 0 = no weapon)
 
+## LIME: Feature Extraction
+- In this section of the notebook, I use [LIME](https://github.com/marcotcr/lime)- a python package that can be used for feature extraction of black box models 
+- Below, the areas that are green are those that the algorithm deems "important" for making a prediction 
+- This technique is useful because it allowed me to understand what the neural network is basing its predictions off of
+
+#### Normal Model
+- For the model I built, the algorithm sometimes focuses on the hand and fingers.  This makes sense because in almost every picture it was trained on, there was a hand present holding the gun
+![LimeNormal](Figures/Normal/NormalLime.png)
+
+#### Mobilenet
+
+![LimeMobilenet](Figures/Mobilenet/MobilenetLime.png)
+
+#### VGG16
+
+![LimeVGG16](Figures/VGG16/VGGLime.png)
 
 ## Limitations
 - Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
