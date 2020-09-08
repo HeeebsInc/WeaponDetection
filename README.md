@@ -142,9 +142,9 @@
 ![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
 
 <p align="right" width="100%">
-    <img width="55%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
-    <img width="55%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
-    <img width="55%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
+    <img width="40%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
+    <img width="40%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
+    <img width="40%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
 </p>
 
 ### VGG16 
