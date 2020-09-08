@@ -54,8 +54,9 @@
 ## Data Processing 
 - Before being fed into the neural network for training, each image was resized to (150,150,3)
 - For each image with a bounding box, an algorithm was applied to extract the areas where there is a weapon
-    - In the figure below, the image on the right was the original photo. Using that photo and the bounding box coordinates, a new photo was created that focuses on the gun only
-    - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  In this case, for every original photo, two corresponding images were used for training 
+    - In the figure below, the image on the left was the original photo. Using that photo and the bounding box coordinates, a new photo was created that focuses on the gun only
+    - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  ]
+    - In this case, for every original photo, two corresponding images were used as a positive class (gun) and 5 were used as a negative (no gun) 
 
 <p align="center" width="100%">
     <img width="45%" src="Figures/ROIExample.png"> 
@@ -151,6 +152,7 @@
     <img width="45%" src="Figures/Normal/V2ROC_NoEdge_NoAugmentation.png"> 
     <img width="45%" src="Figures/Normal/V2CM_NoEdge_NoAugmentation.png"> 
 </p>
+
 ## Transfer Learning 
 - After completing my own model, I tried the following pre-built models to compare performance: 
     1) Mobilenet
