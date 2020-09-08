@@ -187,13 +187,14 @@
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
 - I want to note that there are some issues with NMS as these are still being worked on.  
-- Below is a demo of the CNN I built.  The way this works is it spits a video into separate frames then applies the same logic above to each frame.  After creating bounding boxes for each frame, it rejoins them to the video.  To do this on your own video, use the get_vid_frames functions within the [Functions.py](PyFunctions/Functions.py) file
+- Below is a demo of the CNN I built.  It works by splitting a video into separate frames then applying the same logic above to each frame.  After creating bounding boxes for each frame, it rejoins them back to a video.  To do this on your own video, use the get_vid_frames functions within the [Functions.py](PyFunctions/Functions.py) file
 ![VideoDemo](Figures/Demonew.gif)
 
 ## Comparing Model Performances
 
 - For each model, I compared the accuracy using the images below
-- I realize the text for the predictions are small on the readme, so to see them better click the image to navigate to a larger version to see the predictions. 
+- I realize the text for the predictions are small on the readme, so to see them better click the image to see a larger version. 
+- Non-maxima suppression was different between models
 
 ![TestImages](Figures/TestImages.png)
 
@@ -207,8 +208,6 @@
 
 ![Mobilenet](Figures/ModelComparisons/Mobilenet/Mobilenet.png)
 
-- In the examples above, each model was better at predicting certain features.  
-- Non max suppression was different between models
 - Mobilenet is better at predicting objects that are not a weapon (class 0 = no weapon)
 - Based on these images, Mobilenet correctly predicted every image
 
@@ -216,8 +215,8 @@
 
 ![VGG16](Figures/ModelComparisons/VGG16/VGG16.png)
 
-- In the example above, VGG16 was unable to distinguish non weapon
-- VGG16 was able to classify rifle
+- VGG16 was unable to distinguish non weapon
+- VGG16 was able to classify rifle 100% of the time
 - It incorrectly classified 1 out 3 handgun images as no weapon, while correctly classifying the rest as handgun
 - Although it incorrectly classified a hand gun image as having no weapon, the bounding boxes were not on the gun whatsoever and stayed on the hand holding the gun
 
