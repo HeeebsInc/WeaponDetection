@@ -59,9 +59,16 @@
 
 ![ROIExample](Figures/ROIExample.png)
 
+<p align="center" width="100%">
+    <img width="65%" src="Figures/ROIExample.png"> 
+</p>
+
 - After resizing, edge detection was tried for each version in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
 ![EdgeDetection](Figures/EdgeDetection.png)
+<p align="center" width="100%">
+    <img width="65%" src="Figures/EdgeDetection.png"> 
+</p>
 
 ### Model Architecture
 
@@ -91,25 +98,25 @@
 - A walk through of these steps can be found in the [Technical Notebook](TechnicalNotebook.ipynb)
    
 #### Version 1 (F1 Scores- Test)
-![V1Fscores](Figures/V1F1Scores.png)
+
 <p align="center" width="100%">
-    <img width="45%" src="Figures/V1F1Scores.png"> 
+    <img width="65%" src="Figures/V1F1Scores.png"> 
 </p>
 
 #### Version 2 (F1 Scores - Test)
-![V2Fscores](Figures/V2F1Scores.png)
+
 <p align="center" width="100%">
     <img width="45%" src="Figures/V2F1Scores.png"> 
 </p>
 
 #### Version 1 (ROC Scores- Test)
-![V1ROC](Figures/V1ROCScores.png)
+
 <p align="center" width="100%">
     <img width="45%" src="Figures/V1ROCScores.png"> 
 </p>
 
 #### Version 2 (ROC Scores - Test)
-![V2ROC](Figures/V2ROC.png)
+
 <p align="center" width="100%">
     <img width="45%" src="Figures/V2ROC.png"> 
 </p>
