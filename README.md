@@ -239,17 +239,32 @@
 
 ![LimeVGG16](Figures/VGG16/VGGLime.png)
 
+# Final Thoughts 
+
 ## Limitations
 - Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
 - Right now, this cannot be applied to live video due to speed concerns 
 - Results have a lot of false positives which are problematic for real world situations
 
 ## Recommendations 
-- Splitting a video into frames and processing each image can take anywhere between 1-30 seconds per image (depending on the computer and size of the image)   
-- With my current hardware, this cannot be applied to live video  
-- Retroactive video review: 
+- Although this process is slow on my current hardware, it could in fact be fast enough using parallel computing or more advanced GPUs (2080ti or Nvidia 3000 series cards)
+- The current system can be used for other things such as retroactive video review: 
     - Body cam footage
     - Gun counts at protests
+- Applying the algorithm to the examples above will provide an un-bias input for a given altercation. 
+- For example, if a police officer claimed to have used force on a person due to them thinking that person had a gun, this algorithm can be used to determine if there was in fact a gun present within the footage shot through their body camera.  
+- Although this algorithm should not be used as a defining classifier, it can be used in conjunction with investigations in order to determine if the right decision was made. 
+- On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public spaced.  
+
+#### Things to Consider
+- False Positive Rate: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat. 
+- True Positive Rate: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
+- Considering the reasoning behind false positives, if this were to be deployed in a real-world scenario, the following steps must be taken to ensure detection is properly managed 
+    1. If a weapon is detected as present, it should not notify police/law enforcement directly. 
+    2. Instead, if a weapon is detected it should be relayed to personnel working within the building/area 
+    3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
+- an intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.  
+- The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present.  
 
 
 ## Future Directions 
@@ -257,6 +272,7 @@
 - More data. Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
     
     
+        
     
 I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
 
