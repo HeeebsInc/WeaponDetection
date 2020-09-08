@@ -64,7 +64,7 @@
 ![EdgeDetection](Figures/EdgeDetection.png)
 
 ### Model Architecture
-![CNNPic](Figures/model_plot.png)
+
 <p align="center" width="100%">
     <img width="45%" src="Figures/model_plot.png"> 
 </p>
@@ -92,14 +92,28 @@
    
 #### Version 1 (F1 Scores- Test)
 ![V1Fscores](Figures/V1F1Scores.png)
-            
+<p align="center" width="100%">
+    <img width="45%" src="Figures/V1F1Scores.png"> 
+</p>
+
 #### Version 2 (F1 Scores - Test)
 ![V2Fscores](Figures/V2F1Scores.png)
+<p align="center" width="100%">
+    <img width="45%" src="Figures/V2F1Scores.png"> 
+</p>
 
 #### Version 1 (ROC Scores- Test)
 ![V1ROC](Figures/V1ROCScores.png)
+<p align="center" width="100%">
+    <img width="45%" src="Figures/V1ROCScores.png"> 
+</p>
+
 #### Version 2 (ROC Scores - Test)
 ![V2ROC](Figures/V2ROC.png)
+<p align="center" width="100%">
+    <img width="45%" src="Figures/V2ROC.png"> 
+</p>
+
 ### F1 Scores
 - Because the problem is meant to solve weapon detection, I first looked at the best models that showed the highest F1 score for detecting pistols and rifles.  
     - **Version 1 --> No Edge and No Augmentation**
