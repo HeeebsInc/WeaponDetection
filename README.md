@@ -142,21 +142,9 @@
 ![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
 
 <p align="center" width="100%">
-    <img width="33%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
-    <img width="33%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
-    <img width="33%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
-</p>
-
-<p align="center" width="100%">
-    <img width="40%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
-    <img width="40%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
-    <img width="40%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
-</p>
-
-<p align="right" width="100%">
-    <img width="25%" src="https://i.stack.imgur.com/RJj4x.png"> 
-    <img width="25%" src="https://i.stack.imgur.com/RJj4x.png"> 
-    <img width="25%" src="https://i.stack.imgur.com/RJj4x.png"> 
+    <img width="75%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
+    <img width="75%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
+    <img width="75%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
 </p>
 
 ### VGG16 
