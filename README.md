@@ -129,6 +129,11 @@
 ![CM](Figures/Normal/V2ROC_NoEdge_NoAugmentation.png)
 ![CM](Figures/Normal/V2CM_NoEdge_NoAugmentation.png)
 
+<p align="center" width="100%">
+    <img width="45%" src="Figures/Normal/V2LossAcc_NoEdge_NoAugmentation.png"> 
+    <img width="45%" src="Figures/Normal/V2ROC_NoEdge_NoAugmentation.png"> 
+    <img width="45%" src="Figures/Normal/V2CM_NoEdge_NoAugmentation.png"> 
+</p>
 ## Transfer Learning 
 - After completing my own model, I tried the following pre-built models to compare performance: 
     1) Mobilenet
@@ -137,20 +142,22 @@
 ### Mobilenet
 - Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
 
-![MobileLoss](Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png)
-![MobileRoc](Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png)
-![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
-
 <p align="center" width="100%">
-    <img width="50%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
-    <img width="50%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
-    <img width="50%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
+    <img width="45%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
+    <img width="45%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
+    <img width="45%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
 </p>
 
 ### VGG16 
 ![VGGLoss](Figures/VGG16/VGGV2LossAcc_NoAugment.png)
 ![VGGRoc](Figures/VGG16/VGGV2ROC_NoAugment.png)
 ![VGGCM](Figures/VGG16/VGGV2CM_NoAugment.png)
+
+<p align="center" width="100%">
+    <img width="45%" src="Figures/VGG16/VGGV2LossAcc_NoAugment.png"> 
+    <img width="45%" src="Figures/VGG16/VGGV2ROC_NoAugment.png"> 
+    <img width="45%" src="Figures/VGG16/VGGV2CM_NoAugment.png"> 
+</p>
 
 ## Deployment 
 - [Flask Code](FlaskApp) (WEBSITE COMING SOON) --> The website I built is not yet deployed on a public server.  However, if you would like to see it then clone the repo, and run the [app.py](FlaskApp/app.py) file to see work on your local machine
