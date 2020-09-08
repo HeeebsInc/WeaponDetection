@@ -264,15 +264,19 @@
     2. Instead, if a weapon is detected it should be relayed to personnel working within the building/area 
     3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
 - An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.
-    - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.    
-- The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present.  
+    - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.
+    - Another example would be a child playing with a toy water gun 
+    - For these reasons, there must be a intermediary review so that these detections do not warrant escalated action 
+- The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present. 
+
 
 
 ## Future Directions 
 - Use more Transfer Learning Models --> these models are already trained on objects such as people, therefore they could decrease false positive rates as it they are better at distinguishing objects that are not guns
 - More data. Currently, I have 120,000 images from the IMFDB website, however, creating bounding boxes for each image would require a lot of money and time 
     
-          
+    
+        
 I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
 
  
