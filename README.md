@@ -243,7 +243,6 @@
 
 ## Limitations
 - Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
-- Right now, this cannot be applied to live video due to speed concerns 
 - Results have a lot of false positives which are problematic for real world situations
 
 ## Recommendations 
@@ -257,9 +256,9 @@
 - On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public spaced.  
 
 #### Things to Consider
-- False Positive Rate: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat. 
-- True Positive Rate: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
-- Considering the reasoning behind false positives, if this were to be deployed in a real-world scenario, the following steps must be taken to ensure detection is properly managed 
+- **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wold scenario 
+- **True Positive Rate**: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
+- Considering false positives, if this were to be deployed in a real-world scenario, the following steps must be taken to ensure detection is properly managed 
     1. If a weapon is detected as present, it should not notify police/law enforcement directly. 
     2. Instead, if a weapon is detected it should be relayed to personnel working within the building/area 
     3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
