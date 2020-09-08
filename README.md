@@ -58,7 +58,7 @@
     - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  In this case, for every original photo, two corresponding images were used for training 
 
 <p align="center" width="100%">
-    <img width="55%" src="Figures/ROIExample.png"> 
+    <img width="45%" src="Figures/ROIExample.png"> 
 </p>
 
 - After resizing, edge detection was tried for each version in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
