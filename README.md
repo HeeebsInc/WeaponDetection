@@ -244,10 +244,10 @@
 ## Limitations
 - Splitting a video into frames and processing each image can take anywhere between 5-45 seconds per image depending on the computer 
 - Results have a lot of false positives which are problematic for real world situations
-- Modern video surveillance equipment records at a rate of (30 fps?), but we do not need to run the algorithm on all 30 frames. This would be computationally expensive, and a large amount of processing would be wasted on video that does not even contain people in it. It could be used as part of a pipeline that activates when the camera detects movement/a person in the frame, and we could sample and process 3 frames per second (utilizing only 10% of the video) on a much faster, centralized server 
 
 ## Recommendations 
 - Although this process is slow on my current hardware, it could in fact be fast enough using parallel computing or more advanced GPUs (2080ti or Nvidia 3000 series cards)
+- Modern video surveillance equipment records at a rate of (30-60 fps), but we do not need to run the algorithm on all 30 frames. This would be computationally expensive, and a large amount of processing would be wasted on video that does not even contain people in it. It could be used as part of a pipeline that activates when the camera detects movement/a person in the frame, and we could sample and process 3 frames per second (utilizing only 10% of the video) on a much faster, centralized server 
 - The current system can be used for other things such as retroactive video review: 
     - Body cam footage
     - Gun counts at protests
@@ -278,5 +278,6 @@
     
         
 I want to note that much of this project could not have been done without Adrian Rosebrock, PhD, creator of [PyImageSearch](https://www.pyimagesearch.com/).  If you want to learn advanced deep learning techniques I highly recommend his book as well as everything else found on his website. 
+
 
  
