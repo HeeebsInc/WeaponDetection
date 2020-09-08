@@ -65,6 +65,9 @@
 
 ### Model Architecture
 ![CNNPic](Figures/model_plot.png)
+<p align="center" width="100%">
+    <img width="45%" src="Figures/model_plot.png"> 
+</p>
 
 - Categorical Crossentropy was used because the model is used to predict between three classes (0 = No Weapon, 1 = Handgun, 2 = Rifle) 
 - Softmax output was used because this is a ternary classification problem 
@@ -125,10 +128,6 @@
 - Because Version 2 had a higher accuracy and a lower loss than compared with version 1, I chose to use Version 2 as the final model.  
 - The final architecture of the model is Version 2, No edge and No Augmentation. The corresponding Loss, accuracy, ROC curves, and confusion matrix for this model can be found below  
 
-![CM](Figures/Normal/V2LossAcc_NoEdge_NoAugmentation.png)
-![CM](Figures/Normal/V2ROC_NoEdge_NoAugmentation.png)
-![CM](Figures/Normal/V2CM_NoEdge_NoAugmentation.png)
-
 <p align="center" width="100%">
     <img width="45%" src="Figures/Normal/V2LossAcc_NoEdge_NoAugmentation.png"> 
     <img width="45%" src="Figures/Normal/V2ROC_NoEdge_NoAugmentation.png"> 
@@ -149,9 +148,6 @@
 </p>
 
 ### VGG16 
-![VGGLoss](Figures/VGG16/VGGV2LossAcc_NoAugment.png)
-![VGGRoc](Figures/VGG16/VGGV2ROC_NoAugment.png)
-![VGGCM](Figures/VGG16/VGGV2CM_NoAugment.png)
 
 <p align="center" width="100%">
     <img width="45%" src="Figures/VGG16/VGGV2LossAcc_NoAugment.png"> 
