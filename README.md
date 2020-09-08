@@ -139,10 +139,13 @@
 
 ![MobileLoss](Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png)
 ![MobileRoc](Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png)
-<p align="center">
-<img src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png" alt="Image" width="200" height="200" style="display: block; margin: 0 auto" />
-</p>
 ![MobileCM](Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png)
+
+<p align="center" width="100%">
+    <img width="33%" src="Figures/Mobilenet/MV2LossAcc_NoEdge_NoAugment.png"> 
+    <img width="33%" src="Figures/Mobilenet/MV2ROC_NoEdge_NoAugment.png"> 
+    <img width="33%" src="Figures/Mobilenet/MV2CM_NoEdge_NoAugment.png"> 
+</p>
 
 ### VGG16 
 ![VGGLoss](Figures/VGG16/VGGV2LossAcc_NoAugment.png)
