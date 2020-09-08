@@ -57,15 +57,12 @@
     - In the figure below, the image on the right was the original photo. Using that photo and the bounding box coordinates, a new photo was created that focuses on the gun only
     - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  In this case, for every original photo, two corresponding images were used for training 
 
-![ROIExample](Figures/ROIExample.png)
-
 <p align="center" width="100%">
-    <img width="65%" src="Figures/ROIExample.png"> 
+    <img width="55%" src="Figures/ROIExample.png"> 
 </p>
 
 - After resizing, edge detection was tried for each version in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
-![EdgeDetection](Figures/EdgeDetection.png)
 <p align="center" width="100%">
     <img width="65%" src="Figures/EdgeDetection.png"> 
 </p>
@@ -106,19 +103,19 @@
 #### Version 2 (F1 Scores - Test)
 
 <p align="center" width="100%">
-    <img width="45%" src="Figures/V2F1Scores.png"> 
+    <img width="65%" src="Figures/V2F1Scores.png"> 
 </p>
 
 #### Version 1 (ROC Scores- Test)
 
 <p align="center" width="100%">
-    <img width="45%" src="Figures/V1ROCScores.png"> 
+    <img width="65%" src="Figures/V1ROCScores.png"> 
 </p>
 
 #### Version 2 (ROC Scores - Test)
 
 <p align="center" width="100%">
-    <img width="45%" src="Figures/V2ROC.png"> 
+    <img width="65%" src="Figures/V2ROC.png"> 
 </p>
 
 ### F1 Scores
