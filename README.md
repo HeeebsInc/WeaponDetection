@@ -88,98 +88,25 @@
 - A walk through of these steps can be found in the [Technical Notebook](TechnicalNotebook.ipynb)
    
 #### Version 1 (F1 Scores- Test)
-- **Edge & Augmentation**
-    - No Weapon: 1.0
-    - HandGun: 0.6466165413533834
-    - Rifle: 0.6987179487179487
-- **Edge & No Augmentation**
-    - No Weapon: 0.9934640522875817
-    - HandGun: 0.49814126394052044
-    - Rifle: 0.5667752442996742
-- **No edge & Augmentation** 
-    - No Weapon: 0.8875739644970414
-    - HandGun: 0.6844106463878326
-    - Rifle: 0.6619217081850534
-- **No Edge & No Augmentation** (BEST)
-    - No Weapon: 0.9704918032786886
-    - HandGun: 0.8026315789473685
-    - Rifle: 0.783882783882784
+![V1Fscores](Figures/V1F1Scores.png)
             
 #### Version 2 (F1 Scores - Test)
-- **Edge & Augmentation**
-    - No Weapon: 0.8819444444444445
-    - HandGun: 0.6987951807228916
-    - Rifle: 0.6717557251908398
-- **Edge & No Augmentation**
-    - No Weapon: 0.8438538205980066
-    - HandGun: 0.6006600660066007
-    - Rifle: 0.5971223021582734
-- **No edge & Augmentation** 
-    - No Weapon: 0.9423728813559322
-    - HandGun: 0.6824324324324325
-    - Rifle: 0.7216494845360824
-- **No Edge & No Augmentation** (BEST)
-    - No Weapon: 0.9368770764119602
-    - HandGun: 0.7722772277227723
-    - Rifle: 0.776978417266187
-
-
+![V2Fscores](Figures/V2F1Scores.png)
 
 #### Version 1 (ROC Scores- Test)
-- **Edge & Augmentation**
-    - No Weapon: 1.0
-    - HandGun: 0.87
-    - Rifle: 0.86
-    - Averaged: .91
-- **Edge & No Augmentation**
-    - No Weapon: 1.0
-    - HandGun: 0.78
-    - Rifle: 0.79
-    - Averaged: .86
-- **No edge & Augmentation** 
-    - No Weapon: 0.99
-    - HandGun: 0.87
-    - Rifle: 0.85
-    - Averaged: .91
-- **No Edge & No Augmentation** (BEST)
-    - No Weapon: 0.99
-    - HandGun: 0.93
-    - Rifle: 0.93
-    - Averaged: .95
-            
+![V1ROC](Figures/V1ROCScores.png)
 #### Version 2 (ROC Scores - Test)
-- **Edge & Augmentation**
-    - No Weapon: 0.95
-    - HandGun: 0.85
-    - Rifle: 0.87
-    - Averaged: .89
-- **Edge & No Augmentation**
-    - No Weapon: 0.93
-    - HandGun: 0.77
-    - Rifle: 0.77
-    - Averaged: .82
-- **No edge & Augmentation** 
-    - No Weapon: 0.99
-    - HandGun: 0.87
-    - Rifle: 0.89
-    - Averaged: .92
-- **No Edge & No Augmentation** (BEST)
-    - No Weapon: 0.99
-    - HandGun: 0.91
-    - Rifle: 0.93
-    - Averaged: .95
-
-
+![V2ROC](Figures/V2ROC.png)
 ### F1 Scores
 - Because the problem is meant to solve weapon detection, I first looked at the best models that showed the highest F1 score for detecting pistols and rifles.  
     - **Version 1 --> No Edge and No Augmentation**
-        - No Weapon: 0.9704918032786886
-        - HandGun: 0.8026315789473685
-        - Rifle: 0.783882783882784
+        - No Weapon: 0.97
+        - HandGun: 0.80
+        - Rifle: 0.78
     - **Version 2 --> No Edge and No Augmentation**
-        - No Weapon: 0.9368770764119602
-        - HandGun: 0.7722772277227723
-        - Rifle: 0.776978417266187
+        - No Weapon: 0.94
+        - HandGun: 0.77
+        - Rifle: 0.78
 
 ### ROC Scores 
 - To get a better understanding of how the model performs for each class, I then compared the ROC scores between each model. 
@@ -205,7 +132,7 @@
 ## Transfer Learning 
 - After completing my own model, I tried the following pre-built models to compare performance: 
     1) Mobilenet
-    2) VGG16 (In Progress)
+    2) VGG16 
     
 ### Mobilenet
 - Compared with the model I built, mobilenet was able to achieve a higher accuracy, and higher ROC scores for each class
@@ -233,18 +160,21 @@
 
 - To try this process on your own images, either go to the website where the model is deployed or [this](OpenCVTesting.ipynb) Notebook. Here, you can use your own images or video and see whether it works. 
 - I want to note that there are some issues with NMS as these are still being worked on.  
-
+- Below is a demo of the CNN I built.  The way this works is it spits a video into separate frames then applies the same logic above to each frame.  After creating bounding boxes for each frame, it rejoins them to the video.  To do this on your own video, use the get_vid_frames functions within the [Functions.py](PyFunctions/Functions.py) file
 ![VideoDemo](Figures/Demonew.gif)
 
 ## Comparing Model Performances
 
 - For each model, I compared the accuracy using the images below
+- I realize the text for the predictions are small on the readme, so to see them better click the image to navigate to a larger version to see the predictions. 
 
 ![TestImages](Figures/TestImages.png)
 
 ### Original CNN
 
 ![Normal](Figures/Normal.png)
+
+- The neural network I build incorrectly classified a non weapon as a rifle, and incorrectly classified a hand gun as a rifle.  Everything else was correctly classified
 
 ### Mobilenet
 
@@ -253,6 +183,10 @@
 - In the examples above, each model was better at predicting certain features.  
 - Non max suppression was different between models
 - Mobilenet is better at predicting objects that are not a weapon (class 0 = no weapon)
+- Based on these images, Mobilenet correctly predicted every image
+
+### VGG16 
+
 
 ## LIME: Feature Extraction
 - In this section of the notebook, I use [LIME](https://github.com/marcotcr/lime)- a python package that can be used for feature extraction of black box models 
