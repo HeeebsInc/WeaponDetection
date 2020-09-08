@@ -170,13 +170,13 @@
 
 ![TestImages](Figures/TestImages.png)
 
-### Original CNN
+#### Original CNN
 
 ![Normal](Figures/Normal.png)
 
 - The neural network I build incorrectly classified a non weapon as a rifle, and incorrectly classified a hand gun as a rifle.  Everything else was correctly classified
 
-### Mobilenet
+#### Mobilenet
 
 ![Mobilenet](Figures/Mobilenet.png)
 
@@ -185,7 +185,7 @@
 - Mobilenet is better at predicting objects that are not a weapon (class 0 = no weapon)
 - Based on these images, Mobilenet correctly predicted every image
 
-### VGG16 
+#### VGG16 
 
 
 ## LIME: Feature Extraction
@@ -211,10 +211,10 @@
 - Results have a lot of false positives which are problematic for real world situations
 
 ## Recommendations 
-- Splitting a video into frames and processing each image can take anywhere between 1-3 seconds per image (depending on the computer)   
-- Right now, this cannot be applied to live video  
-- Reviewing video after altercation: 
-    - Body cam footage to determine if there was in fact a gun present
+- Splitting a video into frames and processing each image can take anywhere between 1-30 seconds per image (depending on the computer and size of the image)   
+- With my current hardware, this cannot be applied to live video  
+- Retroactive video review: 
+    - Body cam footage
     - Gun counts at protests
 
 
