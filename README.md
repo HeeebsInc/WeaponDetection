@@ -255,12 +255,12 @@
 - Applying the algorithm to the examples above will provide an un-bias input for a given altercation. 
 - For example, if a police officer claimed to have used force on a person due to them thinking that person had a gun, this algorithm can be used to determine a timeline that maps the escalation in chronological order.  
 - Although this algorithm should not be used as a defining classifier, it can be used in conjunction with investigations in order to determine if the right decision was made. 
-- On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public spaced.  
+- On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public areas.  
 - Finally, this algorithm can be used to detect the presence of a weapon in a video after it has been uploaded to a social media site (such as YouTube.com).  Using this algorithm to detect weapons within an uploaded video would be faster and more efficient then having a team do it manually.  
     - [This article](https://inews.co.uk/news/technology/tiktok-suicide-video-live-stream-man-death-remove-app-639699) discusses an instance where a man killed himself on the popular platform Facebook. Once the video surfaced on the platform, it spread across multiple different accounts very rapidly on another popular platform, TikTok.  Based on this example, if a company such as YouTube, Facebook, or TikTok ran every video that was uploaded through this algorithm, these threats would be detected before they can be spread online
 
 #### Things to Consider
-- **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wold scenario 
+- **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wolf scenario 
 - **True Positive Rate**: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
 - Considering false positives, if this were to be deployed in a real-world scenario, the following steps must be taken to ensure detection is properly managed 
     1. If a weapon is detected as present, it should not notify police/law enforcement directly. 
@@ -268,7 +268,7 @@
     3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
 - An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.
     - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.
-    - Another example would be a child playing with a toy water gun 
+    - Another example would be a child playing with a toy water gun [Tamir Rice Incident](https://en.wikipedia.org/wiki/Shooting_of_Tamir_Rice)
     - For these reasons, there must be a intermediary review so that these detections do not warrant escalated action 
 - The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present. 
 
