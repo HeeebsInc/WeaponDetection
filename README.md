@@ -53,6 +53,10 @@
         - 2 = Positive Rifle ROI
 - For each image, a bounding box was drawn to find the coordinates of gun within the image.  This process was outsourced to [ScaleOps.AI](https://scaleops.ai/) - a company that specializes in data labeling for machine learning 
 
+<p align="center" width="100%">
+    <img width="65%" src="Figures/BoundingBoxViz.png"> 
+</p>
+
 ## Data Processing 
 - Before being fed into the neural network for training, each image was resized to (150,150,3)
 - For each image with a bounding box, an algorithm was applied to extract the areas where there is a weapon
