@@ -258,7 +258,11 @@
 - On the other hand, this algorithm can also be used to detect the presence of guns at protests, and with some modification, count the number of guns it detected.  This can be helpful because it allows law enforcement to get a numerical representation of threats within public areas.  
 - Finally, this algorithm can be used to detect the presence of a weapon in a video after it has been uploaded to a social media site (such as YouTube.com).  Using this algorithm to detect weapons within an uploaded video would be faster and more efficient then having a team do it manually.  
     - [This article](https://inews.co.uk/news/technology/tiktok-suicide-video-live-stream-man-death-remove-app-639699) discusses an instance where a man killed himself on the popular platform Facebook. Once the video surfaced on the platform, it spread across multiple different accounts very rapidly on another popular platform, TikTok.  Based on this example, if a company such as YouTube, Facebook, or TikTok ran every video that was uploaded through this algorithm, these threats would be detected before they can be spread online
+    - Below is an animation for how this would work.  When a video is uploaded to a site such as Youtube, it will be run through this algorithm before it is listed on the site.  If the algorithm approves it, then it moves onto the official upload.  If the algorithm flags it, then it must be given to another team for manual review.  If the team deems it okay for upload, it gets uploaded to the site, otherwise it is blocked. 
 
+<p align="center" width="100%">
+    <img width="45%" src="Figures/hierarchy.png"> 
+</p>
 #### Things to Consider
 - **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wolf scenario 
 - **True Positive Rate**: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
