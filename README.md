@@ -263,6 +263,7 @@
 <p align="center" width="100%">
     <img width="45%" src="Figures/hierarchy.png"> 
 </p>
+
 #### Things to Consider
 - **False Positive Rate**: If a weapon is detected when there was not actually a weapon, false hysteria can be created as there was no actual threat.  A high number of false positives may result in people ignoring alerts from the system, creating a boy-who-cried-wolf scenario 
 - **True Positive Rate**: Being able to detect a weapon in real time can save lives given an area is too large for cameras to monitor.  
