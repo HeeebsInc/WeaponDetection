@@ -9,9 +9,11 @@
     - [Google Slides Presentation](https://docs.google.com/presentation/d/1yFLW9ku_h9B75V2O8RH7AefB-dC_6_SlKAlIt8v51aY/edit?usp=sharing)
 
 ## Business Problem
-- Mass shootings have become increasingly prevalent at public gatherings 
+1. **Mass shootings** have become increasingly prevalent at public gatherings 
 - Creating an algorithm that that be integrated into traditional surveillance systems can be used to detect threats faster and more efficiently than those monitored by people 
 - In modern surveillance systems, there is a person or group of people, in charge of watching monitors which can span across multiple floors of a given area
+2. **Violence on social media platforms** such as Youtube, Facebook, and TikTok
+- An algorithm that integrate itself into traditional upload systems can detect violent videos before they are spread on a given website
 - Considering the graphs below, the United States ranks among the top 5 countries in terms of firearm deaths 
     - **Total Deaths** [Data](https://worldpopulationreview.com/country-rankings/gun-deaths-by-country)
     - **Mass Shootings** [Data](https://worldpopulationreview.com/country-rankings/mass-shootings-by-country)
@@ -271,6 +273,11 @@
     1. If a weapon is detected as present, it should not notify police/law enforcement directly. 
     2. Instead, if a weapon is detected it should be relayed to personnel working within the building/area 
     3.  This process can be beneficial as there can be multiple monitors spanning across different areas, so direct notification of a threat can be faster than waiting for the video to pop up 
+
+<p align="center" width="100%">
+    <img width="45%" src="Figures/hierarchy2.png"> 
+</p>
+
 - An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.
     - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.
     - Another example would be a child playing with a toy water gun [Tamir Rice Incident](https://en.wikipedia.org/wiki/Shooting_of_Tamir_Rice)
