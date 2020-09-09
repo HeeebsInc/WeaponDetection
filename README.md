@@ -57,17 +57,12 @@
 - Before being fed into the neural network for training, each image was resized to (150,150,3)
 - For each image with a bounding box, an algorithm was applied to extract the areas where there is a weapon
     - In the figure below, the image on the left was the original photo. Using that photo and the bounding box coordinates, a new photo was created that focuses on the gun only
-    - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  ]
+    - Not only can this technique be used to minimize unwanted noise, but it can also create new data due to the differences in pixels after applying the algorithm.  
     - In this case, for every original photo, two corresponding images were used as a positive class (gun) and 5 were used as a negative (no gun) 
-
-<p align="center" width="100%">
-    <img width="45%" src="Figures/ROIExample.png"> 
-</p>
-
 - After resizing, edge detection was tried for each version in order to create images where guns are more distinctive than the latter.  Using edge detection resulted in images with a shape of (150,150), which was then resized to (150,150,1) in order to be fed into the convolutional neural network
 
 <p align="center" width="100%">
-    <img width="65%" src="Figures/EdgeDetection.png"> 
+    <img width="65%" src="Figures/ROIEdge.png"> 
 </p>
 
 ### Model Architecture
