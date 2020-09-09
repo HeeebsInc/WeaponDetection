@@ -14,7 +14,7 @@ from skimage.segmentation import mark_boundaries
 
 
 def get_edged(img, dim): 
-    '''This function will convert an image into an edged version using Gaussian filtering''' 
+    '''This function will convert an image into an edged version using Gaussian filtering and return the edged photo''' 
     blurred = cv2.GaussianBlur(img, (3,3), 0)
     wide = cv2.Canny(blurred, 10,200)
     wide = cv2.resize(wide, dim, interpolation = cv2.INTER_CUBIC)
@@ -156,6 +156,7 @@ def get_samples(nn_type, edge = False):
     return x_train, x_test, y_train, y_test
 
 def non_max_suppression(boxes, overlapThresh= .5):
+    '''This function performs non maxima suppression.  The function was taken from PyImageSearch.com.  Right now, there is still tweaking I must do to this function as it does only parts of what I intend it to''' 
     # if there are no boxes, return an empty list
     if len(boxes) == 0:
         return []
@@ -347,7 +348,7 @@ def get_lime_predictions(base_folder, model, dim, save_name= None, iter = 3500):
 #         cv2.imwrite(save_name, joined_images)
 
 def get_vid_frames(path, model, dim, vid_name, edge = False): 
-    '''This function will take a path to an mp4 file and return a list containing each frame of the video.  This function is used for creating bounding boxes within a video'''
+    '''This function will take a path to an mp4 file.  After splitting the video into separate frames, it will run each frame through the model that is provided and create bounding boxes around each area the model believes is a weapon.  Once the bounding boxes are made, the function will combine each frame back into a video and save it to the path specified above. This function is used for creating bounding boxes within a video'''
     from tqdm import tqdm
     vid = cv2.VideoCapture(path)
     total_frames = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
