@@ -278,9 +278,9 @@
     <img width="45%" src="Figures/hierarchy2.png"> 
 </p>
 
-- An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- Public Safety.
+- An intermediary review of a threat is crucial when notifying law enforcement.  If law enforcement was notified due to a presence of a weapon when there actually was not one, this could create exactly the problem we are intending to solve- **_Public Safety_**.
     - For example, if a person was marked as having a weapon when they in face did not, they would be placed in harms way.
-    - Another example would be a child playing with a toy water gun [Tamir Rice Incident](https://en.wikipedia.org/wiki/Shooting_of_Tamir_Rice)
+    - Another example would be a child playing with a toy gun [Tamir Rice Incident](https://en.wikipedia.org/wiki/Shooting_of_Tamir_Rice)
     - For these reasons, there must be a intermediary review so that these detections do not warrant escalated action 
 - The goal behind this project is to promote public safety.  As public areas are very large, it is hard to apply video surveillance to monitor every area at the same time.  Using this system, a security team can better monitor every area at the same time, and be notified quicker if there is in fact a weapon present. 
 
